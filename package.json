@@ -1,0 +1,36 @@
+{
+  "workspaces": [
+    "packages/*",
+    "packages/analytics/*"
+  ],
+  "name": "@cupist/module-packages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "changeset": "npx changeset"
+  },
+  "keywords": [],
+  "author": "cupist-terry",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.73.2"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.7",
+    "@babel/core": "^7.20.0",
+    "@tsconfig/react-native": "^3.0.3",
+    "@types/react": "^18.2.60",
+    "@types/react-native": "^0.73.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.3.0"
+  }
+}
