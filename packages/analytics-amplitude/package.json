@@ -30,7 +30,7 @@
     "react-native-device-info": "^11.1.0"
   },
   "keywords": [],
-  "author": "",
+  "author": "cupist-terry",
   "license": "ISC",
   "packageManager": "pnpm@10.20.0"
 }

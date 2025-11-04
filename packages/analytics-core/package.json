@@ -18,7 +18,7 @@
     "submit": "pnpm publish --registry=http://localhost:4873"
   },
   "keywords": [],
-  "author": "",
+  "author": "cupist-terry",
   "license": "ISC",
   "packageManager": "pnpm@10.20.0"
 }

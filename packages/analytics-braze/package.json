@@ -22,7 +22,7 @@
     "@cupist/analytics-core": "workspace:*"
   },
   "keywords": [],
-  "author": "",
+  "author": "cupist-terry",
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
   "devDependencies": {

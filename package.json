@@ -9,7 +9,8 @@
   "main": "index.js",
   "scripts": {
     "build:all": "pnpm -r --filter='./packages/**' build",
-    "version:update": "npx changeset && npx changeset version"
+    "version:update": "npx changeset && npx changeset version",
+    "version:publish": "pnpm build:all && pnpm version:update && pnpm publish -r --registry=http://localhost:4873"
   },
   "keywords": [],
   "author": "cupist-terry",
