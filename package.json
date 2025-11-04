@@ -8,6 +8,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:all": "pnpm -r --filter='./packages/**' build",
     "version:update": "npx changeset && npx changeset version"
   },
   "keywords": [],
