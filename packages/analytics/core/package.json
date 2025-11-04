@@ -1,0 +1,24 @@
+{
+  "name": "@cupist/analytics-core",
+  "version": "1.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0"
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@cupist/analytics-braze",
+  "version": "1.0.3",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "dependencies": {
+    "@braze/react-native-sdk": "^11.0.0",
+    "@cupist/analytics-core": "workspace:*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
+  "devDependencies": {
+    "@types/lodash-es": "4.17.12"
+  }
+}

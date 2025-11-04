@@ -1,0 +1,36 @@
+{
+  "name": "@cupist/analytics-amplitude",
+  "version": "1.0.2",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "dependencies": {
+    "@amplitude/analytics-react-native": "^1.4.11",
+    "@cupist/analytics-core": "workspace:*",
+    "expo-application": "~5.8.3",
+    "expo-tracking-transparency": "~3.3.0",
+    "react-native-device-info": "^11.1.0"
+  },
+  "peerDependencies": {
+    "expo-application": "~5.8.3",
+    "expo-tracking-transparency": "~3.3.0",
+    "react-native-device-info": "^11.1.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0"
+}
