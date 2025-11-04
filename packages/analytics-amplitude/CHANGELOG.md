@@ -1,5 +1,13 @@
 # @cupist/analytics-amplitude
 
+## 1.0.4
+
+### Patch Changes
+
+- f000487: 의존성 설치 이슈 수정
+- Updated dependencies [f000487]
+  - @cupist/analytics-core@1.0.3
+
 ## 1.0.3
 
 ### Patch Changes
