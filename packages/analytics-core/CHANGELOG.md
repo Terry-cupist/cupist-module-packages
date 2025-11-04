@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.6
+
+### Patch Changes
+
+- 478cae9: dist 최신화 여부 테스트
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @cupist/analytics-singular
 
+## 1.0.7
+
+### Patch Changes
+
+- 478cae9: dist 최신화 여부 테스트
+- Updated dependencies [478cae9]
+  - @cupist/analytics-core@1.0.6
+
 ## 1.0.6
 
 ### Patch Changes
