@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.4
+
+### Patch Changes
+
+- b5bd6e6: 의존성 호환 이슈 수정
+
 ## 1.0.3
 
 ### Patch Changes
