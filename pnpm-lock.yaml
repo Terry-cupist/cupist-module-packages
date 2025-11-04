@@ -55,14 +55,14 @@ importers:
         specifier: ^5.3.0
         version: 5.9.3
 
-  packages/analytics/amplitude:
+  packages/analytics-amplitude:
     dependencies:
       '@amplitude/analytics-react-native':
         specifier: ^1.4.11
-        version: 1.5.16(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0)
+        version: 1.4.11(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0)
       '@cupist/analytics-core':
         specifier: workspace:*
-        version: link:../core
+        version: link:../analytics-core
       expo-application:
         specifier: ~5.8.3
         version: 5.8.4(expo@54.0.22(@babel/core@7.28.5)(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0))
@@ -73,44 +73,44 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))
 
-  packages/analytics/braze:
+  packages/analytics-braze:
     dependencies:
       '@braze/react-native-sdk':
         specifier: ^11.0.0
         version: 11.0.0
       '@cupist/analytics-core':
         specifier: workspace:*
-        version: link:../core
+        version: link:../analytics-core
     devDependencies:
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
 
-  packages/analytics/core: {}
+  packages/analytics-core: {}
 
-  packages/analytics/facebook:
+  packages/analytics-facebook:
     dependencies:
       '@cupist/analytics-core':
         specifier: workspace:*
-        version: link:../core
+        version: link:../analytics-core
       react-native-fbsdk-next:
         specifier: ^13.0.0
         version: 13.4.1(expo@54.0.22(@babel/core@7.28.5)(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0))(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))
 
-  packages/analytics/firebase:
+  packages/analytics-firebase:
     dependencies:
       '@cupist/analytics-core':
         specifier: workspace:*
-        version: link:../core
+        version: link:../analytics-core
       '@react-native-firebase/analytics':
         specifier: ^22.4.0
         version: 22.4.0(@react-native-firebase/app@22.4.0(@react-native-async-storage/async-storage@1.24.0(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0)))(expo@54.0.22(@babel/core@7.28.5)(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0))(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0))
 
-  packages/analytics/singular:
+  packages/analytics-singular:
     dependencies:
       '@cupist/analytics-core':
         specifier: workspace:*
-        version: link:../core
+        version: link:../analytics-core
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -131,17 +131,23 @@ packages:
       graphql:
         optional: true
 
+  '@amplitude/analytics-client-common@1.2.6':
+    resolution: {integrity: sha512-xuZuppJs01/Owli8IX4KAabuKBcswhFPWMYcLaTRBRSr4wgioVjrVihT3jKsAqvUeFDvJQEcxvdOkz/Xpp7o2A==}
+
   '@amplitude/analytics-connector@1.6.4':
     resolution: {integrity: sha512-SpIv0IQMNIq6SH3UqFGiaZyGSc7PBZwRdq7lvP0pBxW8i4Ny+8zwI0pV+VMfMHQwWY3wdIbWw5WQphNjpdq1/Q==}
 
-  '@amplitude/analytics-core@2.31.0':
-    resolution: {integrity: sha512-2ErmoKhnHfNGKLz6nbNL5KCn++8i7WVoy6k0jZu7JOlgW/Xsag9I2i/3M//iQMQqDo1/8rFolVI9X+chkmkK/Q==}
+  '@amplitude/analytics-core@1.2.8':
+    resolution: {integrity: sha512-Krxpr5uvS3HmmjvpYqPfbMbs2kcZZu09L+6KwQnPiofWRzoXWIM217fRfy6aSD/QrAoPGbZjvtVitw9cB7Cx+A==}
 
-  '@amplitude/analytics-react-native@1.5.16':
-    resolution: {integrity: sha512-xmU/26Wb6cmf8spGIGrC0/r0d+BIOtyzg0gt77Hb3F5NJP2CckuZL06XHcVBOjQPw3oKROXNDtl++vtc9qED3Q==}
+  '@amplitude/analytics-react-native@1.4.11':
+    resolution: {integrity: sha512-oqy4v7+x1MXetZ22jonjOO8JFw6UpoiZiGToQC3KIQOV3AH4REDleOYiKv5Mur9MBxj+eBqPGSarCKenJDvnWw==}
     peerDependencies:
       react: '*'
       react-native: '*'
+
+  '@amplitude/analytics-types@1.4.0':
+    resolution: {integrity: sha512-RiMPHBqdrJ8ktTqG+Wzj2htnN/PCG9jGZG0SXtTFnWwVvcAJYbYm55/nrP1TTyrx1OlLhvF2VG3lVUP/xGAU8w==}
 
   '@amplitude/ua-parser-js@0.7.33':
     resolution: {integrity: sha512-wKEtVR4vXuPT9cVEIJkYWnlF++Gx3BdLatPBM+SZ1ztVIvnhdGBZR/mn9x/PzyrMcRlZmyi6L56I2J3doVBnjA==}
@@ -4261,21 +4267,32 @@ snapshots:
 
   '@0no-co/graphql.web@1.2.0': {}
 
-  '@amplitude/analytics-connector@1.6.4': {}
-
-  '@amplitude/analytics-core@2.31.0':
+  '@amplitude/analytics-client-common@1.2.6':
     dependencies:
       '@amplitude/analytics-connector': 1.6.4
+      '@amplitude/analytics-core': 1.2.8
+      '@amplitude/analytics-types': 1.4.0
       tslib: 2.8.1
 
-  '@amplitude/analytics-react-native@1.5.16(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0)':
+  '@amplitude/analytics-connector@1.6.4': {}
+
+  '@amplitude/analytics-core@1.2.8':
     dependencies:
-      '@amplitude/analytics-core': 2.31.0
+      '@amplitude/analytics-types': 1.4.0
+      tslib: 2.8.1
+
+  '@amplitude/analytics-react-native@1.4.11(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@amplitude/analytics-client-common': 1.2.6
+      '@amplitude/analytics-core': 1.2.8
+      '@amplitude/analytics-types': 1.4.0
       '@amplitude/ua-parser-js': 0.7.33
       '@react-native-async-storage/async-storage': 1.24.0(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))
       react: 18.2.0
       react-native: 0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0)
       tslib: 2.8.1
+
+  '@amplitude/analytics-types@1.4.0': {}
 
   '@amplitude/ua-parser-js@0.7.33': {}
 
