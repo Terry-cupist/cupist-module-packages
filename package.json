@@ -8,7 +8,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "changeset": "npx changeset"
+    "version:update": "npx changeset && npx changeset version"
   },
   "keywords": [],
   "author": "cupist-terry",
