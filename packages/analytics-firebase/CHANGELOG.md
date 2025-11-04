@@ -1,5 +1,13 @@
 # @cupist/analytics-firebase
 
+## 1.0.6
+
+### Patch Changes
+
+- b57af70: 모듈 > author 수정
+- Updated dependencies [b57af70]
+  - @cupist/analytics-core@1.0.5
+
 ## 1.0.5
 
 ### Patch Changes

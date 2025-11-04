@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.5
+
+### Patch Changes
+
+- b57af70: 모듈 > author 수정
+
 ## 1.0.4
 
 ### Patch Changes
