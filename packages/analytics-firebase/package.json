@@ -1,6 +1,6 @@
 {
   "name": "@cupist/analytics-firebase",
-  "version": "1.0.10",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,10 +19,10 @@
   },
   "dependencies": {
     "@cupist/analytics-core": "workspace:*",
-    "@react-native-firebase/analytics": "^22.4.0"
+    "@react-native-firebase/analytics": "17.4.2"
   },
   "peerDependencies": {
-    "@react-native-firebase/app": "^22.4.0"
+    "@react-native-firebase/app": "17.4.2"
   },
   "keywords": [],
   "author": "cupist-terry",
