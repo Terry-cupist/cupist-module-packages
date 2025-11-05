@@ -47,10 +47,9 @@ export interface IUserEventModule {
   }) => void;
   conversion?: (props: { code: string }) => void;
   updateUserProperties?: (props: {
-    userId: string | null;
+    userId?: string;
     userProperties: Record<string, any>;
   }) => void;
-  putUserProperties?: (props: { userProperties: Record<string, any> }) => void;
 }
 
 export interface IUserEventClassModule<
@@ -80,9 +79,6 @@ export interface IUserEventClassModule<
   updateUserProperties?: (
     props: FunctionParameter<IUserEventModule["updateUserProperties"]>,
   ) => void;
-  putUserProperties?: (
-    props: FunctionParameter<IUserEventModule["putUserProperties"]>,
-  ) => void;
 }
 
 export type ConstructorProps<
@@ -103,9 +99,9 @@ export type ConstructorProps<
 
 // Re-export utility types for internal use
 export type {
-  RestrictClassProperties,
-  TupleUnion,
   AllCombinations,
   FunctionParameter,
+  RestrictClassProperties,
   TargetProps,
+  TupleUnion,
 };

@@ -18,7 +18,6 @@ const analytics = new UserEventModule({
       logPurchasePG: (props) => {},
       conversion: (props) => {},
       updateUserProperties: (props, actions) => {},
-      putUserProperties: (props, actions) => {},
     },
     firebase: {
       log: (props) => {
@@ -28,7 +27,6 @@ const analytics = new UserEventModule({
       logPurchasePG: (props) => {},
       conversion: (props) => {},
       updateUserProperties: (props, actions) => {},
-      putUserProperties: (props, actions) => {},
     },
   },
   defaultTargets: {

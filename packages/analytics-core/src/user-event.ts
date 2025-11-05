@@ -41,10 +41,6 @@ export class UserEventModule<
       "updateUserProperties",
       this.updateUserProperties,
     );
-    this.putUserProperties = this.withInitCheck(
-      "putUserProperties",
-      this.putUserProperties,
-    );
   }
 
   private withInitCheck<T extends (...args: any[]) => any>(
@@ -167,34 +163,32 @@ export class UserEventModule<
   }: FunctionParameter<
     IUserEventClassModule<TUserEventTarget>["updateUserProperties"]
   >) {
-    if (userId) {
-      Object.entries(this.modules).forEach(([moduleName, module]) => {
-        console.log(
-          `[UserEventModule] <${moduleName}> updateUserProperties with userId: ${userId}`,
-        );
-        (module as IUserEventModule).updateUserProperties?.({
-          userId,
-          userProperties,
-        });
-      });
-    } else {
-      Object.entries(this.modules).forEach(([moduleName, module]) => {
-        console.log(
-          `[UserEventModule] <${moduleName}> updateUserProperties refused(userId is null), logout`,
-        );
-        (module as IUserEventModule).logout?.();
-      });
-    }
-  }
-
-  putUserProperties({
-    userProperties,
-  }: FunctionParameter<
-    IUserEventClassModule<TUserEventTarget>["putUserProperties"]
-  >) {
     Object.entries(this.modules).forEach(([moduleName, module]) => {
-      console.log(`[UserEventModule] <${moduleName}> putUserProperties`);
-      (module as IUserEventModule).putUserProperties?.({ userProperties });
+      console.log(
+        `[UserEventModule] <${moduleName}> updateUserProperties with userId: ${userId}`,
+      );
+      (module as IUserEventModule).updateUserProperties?.({
+        userId,
+        userProperties,
+      });
     });
+    // if (userId) {
+    //   Object.entries(this.modules).forEach(([moduleName, module]) => {
+    //     console.log(
+    //       `[UserEventModule] <${moduleName}> updateUserProperties with userId: ${userId}`,
+    //     );
+    //     (module as IUserEventModule).updateUserProperties?.({
+    //       userId,
+    //       userProperties,
+    //     });
+    //   });
+    // } else {
+    //   Object.entries(this.modules).forEach(([moduleName, module]) => {
+    //     console.log(
+    //       `[UserEventModule] <${moduleName}> updateUserProperties refused(userId is null), logout`,
+    //     );
+    //     (module as IUserEventModule).logout?.();
+    //   });
+    // }
   }
 }
