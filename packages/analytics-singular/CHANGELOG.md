@@ -1,5 +1,13 @@
 # @cupist/analytics-singular
 
+## 1.0.8
+
+### Patch Changes
+
+- 934f772: 모듈간 피드백 적용 및 관련코드 수정
+- Updated dependencies [934f772]
+  - @cupist/analytics-core@1.0.7
+
 ## 1.0.7
 
 ### Patch Changes

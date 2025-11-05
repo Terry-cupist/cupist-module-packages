@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.7
+
+### Patch Changes
+
+- 934f772: 모듈간 피드백 적용 및 관련코드 수정
+
 ## 1.0.6
 
 ### Patch Changes
