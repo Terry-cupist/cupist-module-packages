@@ -31,13 +31,10 @@ export const getFirebaseInstance: () => IUserEventModule = () => {
       logEvent(analytics, code);
     },
     updateUserProperties({ userId, userProperties }) {
-      setUserId(analytics, userId);
-      setUserProperties(
-        analytics,
-        convertFirebaseUserProperties(userProperties),
-      );
-    },
-    putUserProperties({ userProperties }) {
+      if (userId) {
+        setUserId(analytics, userId);
+      }
+
       setUserProperties(
         analytics,
         convertFirebaseUserProperties(userProperties),
