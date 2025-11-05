@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.9
+
+### Patch Changes
+
+- dcf3bb9: init에 Promise 패턴 추가
+
 ## 1.0.8
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @cupist/analytics-firebase
 
+## 1.0.12
+
+### Patch Changes
+
+- Updated dependencies [dcf3bb9]
+  - @cupist/analytics-core@1.0.9
+
 ## 1.0.11
 
 ### Patch Changes
