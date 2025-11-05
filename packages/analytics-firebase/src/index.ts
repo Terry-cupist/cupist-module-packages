@@ -6,5 +6,18 @@ export const getFirebaseInstance: () => IUserEventModule = () => {
     log({ eventName, params }) {
       analytics().logEvent(eventName, params);
     },
+    conversion({ code }) {
+      analytics().logEvent(code);
+    },
+    updateUserProperties({ userId, userProperties }) {
+      analytics().setUserId(userId);
+      analytics().setUserProperties(userProperties);
+    },
+    putUserProperties({ userProperties }) {
+      analytics().setUserProperties(userProperties);
+    },
+    logout() {
+      analytics().setUserId(null);
+    },
   };
 };
