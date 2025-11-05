@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.8
+
+### Patch Changes
+
+- 006ba6e: 모듈, user-event간의 파일분리 적용 및 관련 코드 수정
+
 ## 1.0.7
 
 ### Patch Changes

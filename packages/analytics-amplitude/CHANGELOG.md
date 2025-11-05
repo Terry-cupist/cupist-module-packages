@@ -1,5 +1,13 @@
 # @cupist/analytics-amplitude
 
+## 1.0.9
+
+### Patch Changes
+
+- 006ba6e: 모듈, user-event간의 파일분리 적용 및 관련 코드 수정
+- Updated dependencies [006ba6e]
+  - @cupist/analytics-core@1.0.8
+
 ## 1.0.8
 
 ### Patch Changes
