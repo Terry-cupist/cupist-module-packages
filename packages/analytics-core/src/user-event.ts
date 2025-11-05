@@ -1,3 +1,7 @@
+type RestrictClassProperties<T, U> = {
+  [K in keyof U]: K extends keyof T ? T[K] : never;
+};
+
 type TupleUnion<U extends string, R extends any[] = []> = {
   [S in U]: Exclude<U, S> extends never
     ? [...R, S]
@@ -22,6 +26,7 @@ type TargetProps<
 };
 
 export interface IUserEventModule {
+  init?: () => void | Promise<void>;
   log?: (props: { eventName: string; params: Record<string, any> }) => void;
   logout?: () => void;
   logPurchase?: (props: {
@@ -54,6 +59,7 @@ export interface IUserEventClassModule<
     IUserEventModule
   >,
 > {
+  init?: () => void | Promise<void>;
   log?: (
     props: FunctionParameter<IUserEventModule["log"]> &
       TargetProps<TUserEventTarget>,
@@ -88,7 +94,6 @@ export type ConstructorProps<
   modules: {
     [K in keyof TUserEventTarget]: IUserEventModule;
   };
-  //   modules: TUserEventTarget;
   defaultTargets: {
     [K in keyof IUserEventModule]?: AllCombinations<
       TupleUnion<`${string & keyof TUserEventTarget}`>
@@ -101,7 +106,11 @@ export class UserEventModule<
     `${string & keyof TUserEventTarget}`,
     IUserEventModule
   >,
-> implements IUserEventClassModule<TUserEventTarget>
+> implements
+    RestrictClassProperties<
+      IUserEventClassModule<TUserEventTarget>,
+      UserEventModule<TUserEventTarget>
+    >
 {
   private modules;
   private defaultTargets;
@@ -109,6 +118,12 @@ export class UserEventModule<
   constructor({ modules, defaultTargets }: ConstructorProps<TUserEventTarget>) {
     this.modules = modules;
     this.defaultTargets = defaultTargets;
+  }
+
+  init() {
+    Object.values(this.modules).forEach((moduleTarget) => {
+      (moduleTarget as IUserEventModule).init?.();
+    });
   }
 
   log({
