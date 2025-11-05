@@ -66,15 +66,17 @@ export class UserEventModule<
     }) as T;
   }
 
-  init() {
-    try {
-      Object.values(this.modules).forEach((moduleTarget) => {
-        (moduleTarget as IUserEventModule).init?.();
-      });
-      this.isInitialized = true;
-    } catch (error) {
-      console.error("[UserEventModule] Error in init():", error);
-    }
+  async init() {
+    await Promise.all(
+      Object.values(this.modules).map(async (moduleTarget) => {
+        try {
+          await (moduleTarget as IUserEventModule).init?.();
+        } catch (error) {
+          console.error("[UserEventModule] Error in init():", error);
+        }
+      }),
+    );
+    this.isInitialized = true;
   }
 
   log({
