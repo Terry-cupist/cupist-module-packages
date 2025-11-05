@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    // JavaScript 출력 버전 (ES2018 = ES9)
-    "target": "es2018",
     // 모듈 시스템 (CommonJS - Node.js 호환)
     "module": "commonjs",
     // 사용할 라이브러리 타입 정의
