@@ -1,105 +1,15 @@
-type RestrictClassProperties<T, U> = {
-  [K in keyof U]: K extends keyof T ? T[K] : never;
-};
+import type {
+  ConstructorProps,
+  FunctionParameter,
+  IUserEventClassModule,
+  IUserEventModule,
+  RestrictClassProperties,
+} from "./user-event.types";
 
-type TupleUnion<U extends string, R extends any[] = []> = {
-  [S in U]: Exclude<U, S> extends never
-    ? [...R, S]
-    : TupleUnion<Exclude<U, S>, [...R, S]>;
-}[U];
-
-type AllCombinations<T extends readonly any[]> = T extends [infer F, ...infer R]
-  ? AllCombinations<R> | [F, ...AllCombinations<R>]
-  : [];
-
-type FunctionParameter<T> = T extends (props: infer P, ...args: any[]) => any
-  ? P
-  : never;
-
-type TargetProps<
-  TUserEventTarget extends Record<
-    `${string & keyof TUserEventTarget}`,
-    IUserEventModule
-  >,
-> = {
-  targets?: AllCombinations<TupleUnion<`${string & keyof TUserEventTarget}`>>;
-};
-
-export interface IUserEventModule {
-  init?: () => void | Promise<void>;
-  log?: (props: { eventName: string; params: Record<string, any> }) => void;
-  logout?: () => void;
-  logPurchase?: (props: {
-    transactionId?: string;
-    orderId?: string;
-    productId: string;
-    signature?: string;
-    price: number;
-    priceOrigin?: string;
-    currency: string;
-    receiptDetail: string;
-    params: Record<string, any>;
-  }) => void;
-  logPurchasePG?: (props: {
-    gather_id: string;
-    price: number;
-    source: string;
-  }) => void;
-  conversion?: (props: { code: string }) => void;
-  updateUserProperties?: (props: {
-    userId: string | null;
-    userProperties: Record<string, any>;
-  }) => void;
-  putUserProperties?: (props: { userProperties: Record<string, any> }) => void;
-}
-
-export interface IUserEventClassModule<
-  TUserEventTarget extends Record<
-    `${string & keyof TUserEventTarget}`,
-    IUserEventModule
-  >,
-> {
-  init?: () => void | Promise<void>;
-  log?: (
-    props: FunctionParameter<IUserEventModule["log"]> &
-      TargetProps<TUserEventTarget>,
-  ) => void;
-  logout?: () => void;
-  logPurchase?: (
-    props: FunctionParameter<IUserEventModule["logPurchase"]> &
-      TargetProps<TUserEventTarget>,
-  ) => void;
-  logPurchasePG?: (
-    props: FunctionParameter<IUserEventModule["logPurchasePG"]> &
-      TargetProps<TUserEventTarget>,
-  ) => void;
-  conversion?: (
-    props: FunctionParameter<IUserEventModule["conversion"]> &
-      TargetProps<TUserEventTarget>,
-  ) => void;
-  updateUserProperties?: (
-    props: FunctionParameter<IUserEventModule["updateUserProperties"]>,
-  ) => void;
-  putUserProperties?: (
-    props: FunctionParameter<IUserEventModule["putUserProperties"]>,
-  ) => void;
-}
-
-export type ConstructorProps<
-  TUserEventTarget extends Record<
-    `${string & keyof TUserEventTarget}`,
-    IUserEventModule
-  >,
-> = {
-  modules: {
-    [K in keyof TUserEventTarget]: IUserEventModule;
-  };
-  defaultTargets: {
-    [K in keyof IUserEventModule]?: AllCombinations<
-      TupleUnion<`${string & keyof TUserEventTarget}`>
-    >;
-  };
-};
+export type {
+  IUserEventClassModule,
+  IUserEventModule,
+} from "./user-event.types";
 
 export class UserEventModule<
   TUserEventTarget extends Record<
@@ -114,16 +24,57 @@ export class UserEventModule<
 {
   private modules;
   private defaultTargets;
+  private isInitialized = false;
 
   constructor({ modules, defaultTargets }: ConstructorProps<TUserEventTarget>) {
     this.modules = modules;
     this.defaultTargets = defaultTargets;
+
+    this.log = this.withInitCheck("log", this.log);
+    this.logPurchase = this.withInitCheck("logPurchase", this.logPurchase);
+    this.logPurchasePG = this.withInitCheck(
+      "logPurchasePG",
+      this.logPurchasePG,
+    );
+    this.conversion = this.withInitCheck("conversion", this.conversion);
+    this.updateUserProperties = this.withInitCheck(
+      "updateUserProperties",
+      this.updateUserProperties,
+    );
+    this.putUserProperties = this.withInitCheck(
+      "putUserProperties",
+      this.putUserProperties,
+    );
+  }
+
+  private withInitCheck<T extends (...args: any[]) => any>(
+    methodName: string,
+    method: T,
+  ): T {
+    return ((...args: any[]) => {
+      try {
+        if (!this.isInitialized) {
+          console.error(
+            `[UserEventModule] ${methodName}() called before init(). Please call init() first.`,
+          );
+          return;
+        }
+        return method.apply(this, args);
+      } catch (error) {
+        console.error(`[UserEventModule] Error in ${methodName}():`, error);
+      }
+    }) as T;
   }
 
   init() {
-    Object.values(this.modules).forEach((moduleTarget) => {
-      (moduleTarget as IUserEventModule).init?.();
-    });
+    try {
+      Object.values(this.modules).forEach((moduleTarget) => {
+        (moduleTarget as IUserEventModule).init?.();
+      });
+      this.isInitialized = true;
+    } catch (error) {
+      console.error("[UserEventModule] Error in init():", error);
+    }
   }
 
   log({
