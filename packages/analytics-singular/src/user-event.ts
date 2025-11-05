@@ -1,0 +1,82 @@
+import { IUserEventModule } from "@cupist/analytics-core";
+import { Platform } from "react-native";
+import {
+  Singular,
+  SingularAndroidPurchase,
+  SingularConfig,
+  SingularIOSPurchase,
+  SingularLinkParams,
+} from "./singular";
+
+export const getSingularInstance: (props: {
+  apiKey: string;
+  appSecret: string;
+  onDeepLinkAction: (deeplink: string) => void;
+}) => IUserEventModule = ({
+  apiKey = "",
+  appSecret = "",
+  onDeepLinkAction,
+}) => ({
+  async init() {
+    Singular.init(
+      new SingularConfig(apiKey, appSecret)
+        .withSkAdNetworkEnabled(true)
+        .withSessionTimeoutInSec(120)
+        .withWaitForTrackingAuthorizationWithTimeoutInterval(300)
+        .withSingularLink((singularLinkParams: SingularLinkParams) => {
+          const { deeplink } = singularLinkParams;
+          onDeepLinkAction(deeplink);
+        }),
+    );
+  },
+
+  log({ eventName, params }) {
+    Singular.eventWithArgs(eventName, params);
+    Singular.limitDataSharing(false);
+  },
+
+  logPurchase({
+    transactionId,
+    orderId,
+    productId,
+    price,
+    currency,
+    receiptDetail,
+    signature,
+  }) {
+    if (Platform.OS === "ios") {
+      const singularPurchase = new SingularIOSPurchase(
+        price,
+        currency,
+        productId,
+        (transactionId ?? orderId) as string,
+        receiptDetail,
+      );
+      Singular.inAppPurchase("__iap__", singularPurchase);
+    } else if (Platform.OS === "android") {
+      const singularPurchase = new SingularAndroidPurchase(
+        price,
+        currency,
+        receiptDetail,
+        signature ?? productId,
+      );
+      Singular.inAppPurchase("__iap__", singularPurchase);
+    }
+  },
+  updateUserProperties({ userId, userProperties }) {
+    Singular.setCustomUserId(userId as string);
+    Object.entries(userProperties).forEach(([key, value]) => {
+      Singular.setGlobalProperty(key, String(value), true);
+    });
+  },
+  putUserProperties(userProperties: Record<string, any>): void {
+    Object.entries(userProperties).forEach(([key, value]) => {
+      Singular.setGlobalProperty(key, String(value), true);
+    });
+  },
+
+  logout(): void {
+    Singular.clearGlobalProperties();
+    Singular.unsetCustomUserId();
+  },
+});
