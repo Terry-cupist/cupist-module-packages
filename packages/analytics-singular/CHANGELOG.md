@@ -1,5 +1,13 @@
 # @cupist/analytics-singular
 
+## 1.0.11
+
+### Patch Changes
+
+- d4465ff: refactor: 중복되는 putUserProperties 메서드 제거 및 updateUserProperties userId 분기처리 적용
+- Updated dependencies [d4465ff]
+  - @cupist/analytics-core@1.0.11
+
 ## 1.0.10
 
 ### Patch Changes

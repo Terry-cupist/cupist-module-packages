@@ -64,12 +64,10 @@ export const getSingularInstance: (props: {
     }
   },
   updateUserProperties({ userId, userProperties }) {
-    Singular.setCustomUserId(userId as string);
-    Object.entries(userProperties).forEach(([key, value]) => {
-      Singular.setGlobalProperty(key, String(value), true);
-    });
-  },
-  putUserProperties(userProperties: Record<string, any>): void {
+    if (userId) {
+      Singular.setCustomUserId(userId);
+    }
+
     Object.entries(userProperties).forEach(([key, value]) => {
       Singular.setGlobalProperty(key, String(value), true);
     });
