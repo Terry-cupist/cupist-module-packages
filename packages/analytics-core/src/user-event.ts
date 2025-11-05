@@ -67,12 +67,18 @@ export class UserEventModule<
   }
 
   async init() {
+    console.log("[UserEventModule] init start");
     await Promise.all(
-      Object.values(this.modules).map(async (moduleTarget) => {
+      Object.entries(this.modules).map(async ([moduleName, moduleTarget]) => {
         try {
+          console.log(`[UserEventModule] <${moduleName}> initializing...`);
           await (moduleTarget as IUserEventModule).init?.();
+          console.log(`[UserEventModule] <${moduleName}> initialized`);
         } catch (error) {
-          console.error("[UserEventModule] Error in init():", error);
+          console.error(
+            `[UserEventModule] Error in <${moduleName}> init():`,
+            error,
+          );
         }
       }),
     );
@@ -84,9 +90,10 @@ export class UserEventModule<
     params,
     targets = this.defaultTargets?.log ?? ([] as any),
   }: FunctionParameter<IUserEventClassModule<TUserEventTarget>["log"]>) {
-    (targets as (keyof TUserEventTarget)[]).forEach((target) =>
-      this.modules?.[target]?.log?.({ eventName, params }),
-    );
+    (targets as (keyof TUserEventTarget)[]).forEach((target) => {
+      console.log(`[UserEventModule] <${target.toString()}> log`);
+      this.modules?.[target]?.log?.({ eventName, params });
+    });
   }
 
   logPurchase({
@@ -103,7 +110,8 @@ export class UserEventModule<
   }: FunctionParameter<
     IUserEventClassModule<TUserEventTarget>["logPurchase"]
   >) {
-    (targets as (keyof TUserEventTarget)[]).forEach((target) =>
+    (targets as (keyof TUserEventTarget)[]).forEach((target) => {
+      console.log(`[UserEventModule] <${target.toString()}> logPurchase`);
       this.modules?.[target]?.logPurchase?.({
         transactionId,
         orderId,
@@ -114,8 +122,8 @@ export class UserEventModule<
         currency,
         receiptDetail,
         params,
-      }),
-    );
+      });
+    });
   }
 
   logPurchasePG({
@@ -126,7 +134,8 @@ export class UserEventModule<
   }: FunctionParameter<
     IUserEventClassModule<TUserEventTarget>["logPurchasePG"]
   >) {
-    (targets as (keyof TUserEventTarget)[]).forEach((target) =>
+    (targets as (keyof TUserEventTarget)[]).forEach((target) => {
+      console.log(`[UserEventModule] <${target.toString()}> logPurchasePG`);
       this.modules?.[target]?.logPurchase?.({
         orderId: undefined,
         productId: "pg_purchase",
@@ -138,17 +147,18 @@ export class UserEventModule<
           source,
           context: "pg",
         },
-      }),
-    );
+      });
+    });
   }
 
   conversion({
     code,
     targets = this.defaultTargets?.conversion ?? ([] as any),
   }: FunctionParameter<IUserEventClassModule<TUserEventTarget>["conversion"]>) {
-    (targets as (keyof TUserEventTarget)[]).forEach((target) =>
-      this.modules?.[target]?.conversion?.({ code }),
-    );
+    (targets as (keyof TUserEventTarget)[]).forEach((target) => {
+      console.log(`[UserEventModule] <${target.toString()}> conversion`);
+      this.modules?.[target]?.conversion?.({ code });
+    });
   }
 
   updateUserProperties({
@@ -158,16 +168,22 @@ export class UserEventModule<
     IUserEventClassModule<TUserEventTarget>["updateUserProperties"]
   >) {
     if (userId) {
-      Object.values(this.modules).forEach((module) =>
+      Object.entries(this.modules).forEach(([moduleName, module]) => {
+        console.log(
+          `[UserEventModule] <${moduleName}> updateUserProperties with userId: ${userId}`,
+        );
         (module as IUserEventModule).updateUserProperties?.({
           userId,
           userProperties,
-        }),
-      );
+        });
+      });
     } else {
-      Object.values(this.modules).forEach((module) =>
-        (module as IUserEventModule).logout?.(),
-      );
+      Object.entries(this.modules).forEach(([moduleName, module]) => {
+        console.log(
+          `[UserEventModule] <${moduleName}> updateUserProperties refused(userId is null), logout`,
+        );
+        (module as IUserEventModule).logout?.();
+      });
     }
   }
 
@@ -176,8 +192,9 @@ export class UserEventModule<
   }: FunctionParameter<
     IUserEventClassModule<TUserEventTarget>["putUserProperties"]
   >) {
-    Object.values(this.modules).forEach((module) =>
-      (module as IUserEventModule).putUserProperties?.({ userProperties }),
-    );
+    Object.entries(this.modules).forEach(([moduleName, module]) => {
+      console.log(`[UserEventModule] <${moduleName}> putUserProperties`);
+      (module as IUserEventModule).putUserProperties?.({ userProperties });
+    });
   }
 }
