@@ -1,12 +1,5 @@
 import { IUserEventModule } from "@cupist/analytics-core";
-import {
-  getAnalytics,
-  logEvent,
-  setUserId,
-  setUserProperties,
-} from "./firebase";
-
-export const analytics = getAnalytics();
+import analytics from "./firebase";
 
 export function convertFirebaseUserProperties(
   userProperties: Record<string, any>,
@@ -25,26 +18,20 @@ export function convertFirebaseUserProperties(
 export const getFirebaseInstance: () => IUserEventModule = () => {
   return {
     log({ eventName, params }) {
-      logEvent(analytics, eventName, params);
+      analytics().logEvent(eventName, params);
     },
     conversion({ code }) {
-      logEvent(analytics, code);
+      analytics().logEvent(code);
     },
     updateUserProperties({ userId, userProperties }) {
-      setUserId(analytics, userId);
-      setUserProperties(
-        analytics,
-        convertFirebaseUserProperties(userProperties),
-      );
+      analytics().setUserId(userId);
+      analytics().setUserProperties(userProperties);
     },
     putUserProperties({ userProperties }) {
-      setUserProperties(
-        analytics,
-        convertFirebaseUserProperties(userProperties),
-      );
+      analytics().setUserProperties(userProperties);
     },
     logout() {
-      setUserId(analytics, null);
+      analytics().setUserId(null);
     },
   };
 };
