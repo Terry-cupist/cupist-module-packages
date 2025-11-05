@@ -45,16 +45,12 @@ export const getAmplitudeInstance: ({
       Object.entries(userProperties).forEach(([key, value]) => {
         identifyObj.set(key, value);
       });
-      amplitude.setUserId(userId as string);
-      amplitude.identify(identifyObj);
-      amplitude.flush();
-    },
-    putUserProperties({ userProperties }) {
-      const identifyObj = new amplitude.Identify();
 
-      Object.entries(userProperties).forEach(([key, value]) => {
-        identifyObj.set(key, value);
-      });
+      const prevUserId = amplitude.getUserId();
+      if (userId && prevUserId !== userId) {
+        amplitude.setUserId(userId);
+      }
+
       amplitude.identify(identifyObj);
       amplitude.flush();
     },
