@@ -172,23 +172,12 @@ export class UserEventModule<
         userProperties,
       });
     });
-    // if (userId) {
-    //   Object.entries(this.modules).forEach(([moduleName, module]) => {
-    //     console.log(
-    //       `[UserEventModule] <${moduleName}> updateUserProperties with userId: ${userId}`,
-    //     );
-    //     (module as IUserEventModule).updateUserProperties?.({
-    //       userId,
-    //       userProperties,
-    //     });
-    //   });
-    // } else {
-    //   Object.entries(this.modules).forEach(([moduleName, module]) => {
-    //     console.log(
-    //       `[UserEventModule] <${moduleName}> updateUserProperties refused(userId is null), logout`,
-    //     );
-    //     (module as IUserEventModule).logout?.();
-    //   });
-    // }
+  }
+
+  logout() {
+    Object.entries(this.modules).forEach(([moduleName, module]) => {
+      console.log(`[UserEventModule] <${moduleName}> logout`);
+      (module as IUserEventModule).logout?.();
+    });
   }
 }
