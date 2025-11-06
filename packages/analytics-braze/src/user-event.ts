@@ -1,5 +1,5 @@
 import { IUserEventModule } from "@cupist/analytics-core";
-import Braze, { getBrazeUserId } from "./braze";
+import Braze, { getBrazeUserId, MonthsAsNumber } from "./braze";
 
 export const getBrazeInstance: () => IUserEventModule = () => {
   return {
@@ -20,6 +20,13 @@ export const getBrazeInstance: () => IUserEventModule = () => {
           Braze.setFirstName(value);
         } else if (key === "gender" && ["F", "M"].includes(value)) {
           Braze.setGender(value.toLowerCase());
+        } else if (key === "birthday" && value.split("-").length > 2) {
+          const [year, month, day] = value.split("-");
+          Braze.setDateOfBirth(
+            Number(year),
+            parseInt(month, 10) as MonthsAsNumber,
+            Number(day),
+          );
         } else {
           // NOTE: value가 null인 경우 해당 프로퍼티를 지우는 동작이 실행되며, 이로 인해 회원가입 시 crash가 발생할 수 있다.
           const convertedValue = value === null ? undefined : value;
