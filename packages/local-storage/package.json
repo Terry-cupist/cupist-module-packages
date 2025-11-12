@@ -1,0 +1,30 @@
+{
+  "name": "@cupist/local-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.24.0"
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": "^1.24.0"
+  },
+  "keywords": [],
+  "author": "cupist-terry",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0"
+}
