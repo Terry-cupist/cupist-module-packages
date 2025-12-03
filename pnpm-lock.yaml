@@ -124,6 +124,15 @@ importers:
         specifier: ^3.6.1
         version: 3.9.0(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))
 
+  packages/bottom-sheet-manager:
+    dependencies:
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-native:
+        specifier: 0.73.2
+        version: 0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0)
+
   packages/local-storage:
     dependencies:
       '@react-native-async-storage/async-storage':
