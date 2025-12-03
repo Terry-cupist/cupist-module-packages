@@ -124,6 +124,12 @@ importers:
         specifier: ^3.6.1
         version: 3.9.0(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))
 
+  packages/local-storage:
+    dependencies:
+      '@react-native-async-storage/async-storage':
+        specifier: ^1.24.0
+        version: 1.24.0(react-native@0.73.2(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(react@18.2.0))
+
 packages:
 
   '@0no-co/graphql.web@1.2.0':
