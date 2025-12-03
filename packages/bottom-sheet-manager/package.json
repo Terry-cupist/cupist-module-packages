@@ -1,0 +1,34 @@
+{
+  "name": "@cupist/bottom-sheet-manager",
+  "version": "2.0.0",
+  "description": "Framework-agnostic bottom sheet manager with external component injection",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.73.2"
+  },
+  "keywords": [
+    "react",
+    "bottom-sheet",
+    "modal",
+    "manager",
+    "framework-agnostic"
+  ],
+  "author": "cupist-terry",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0"
+}
