@@ -12,14 +12,18 @@ export type {
 } from "./user-event.types";
 
 export class UserEventModule<
+  TEventNames,
+  TEventParams extends {
+    [TEventName in `${string & TEventNames}`]: TEventParams[TEventName];
+  },
   TUserEventTarget extends Record<
     `${string & keyof TUserEventTarget}`,
     IUserEventModule
   >,
 > implements
     RestrictClassProperties<
-      IUserEventClassModule<TUserEventTarget>,
-      UserEventModule<TUserEventTarget>
+      IUserEventClassModule<TEventNames, TEventParams, TUserEventTarget>,
+      UserEventModule<TEventNames, TEventParams, TUserEventTarget>
     >
 {
   private modules;
@@ -85,7 +89,9 @@ export class UserEventModule<
     eventName,
     params,
     targets = this.defaultTargets?.log ?? ([] as any),
-  }: FunctionParameter<IUserEventClassModule<TUserEventTarget>["log"]>) {
+  }: FunctionParameter<
+    IUserEventClassModule<TEventNames, TEventParams, TUserEventTarget>["log"]
+  >) {
     (targets as (keyof TUserEventTarget)[]).forEach((target) => {
       console.log(`[UserEventModule] <${target.toString()}> log`);
       this.modules?.[target]?.log?.({ eventName, params });
@@ -104,7 +110,11 @@ export class UserEventModule<
     params,
     targets = this.defaultTargets?.logPurchase ?? ([] as any),
   }: FunctionParameter<
-    IUserEventClassModule<TUserEventTarget>["logPurchase"]
+    IUserEventClassModule<
+      TEventNames,
+      TEventParams,
+      TUserEventTarget
+    >["logPurchase"]
   >) {
     (targets as (keyof TUserEventTarget)[]).forEach((target) => {
       console.log(`[UserEventModule] <${target.toString()}> logPurchase`);
@@ -128,7 +138,11 @@ export class UserEventModule<
     source,
     targets = this.defaultTargets?.logPurchasePG ?? ([] as any),
   }: FunctionParameter<
-    IUserEventClassModule<TUserEventTarget>["logPurchasePG"]
+    IUserEventClassModule<
+      TEventNames,
+      TEventParams,
+      TUserEventTarget
+    >["logPurchasePG"]
   >) {
     (targets as (keyof TUserEventTarget)[]).forEach((target) => {
       console.log(`[UserEventModule] <${target.toString()}> logPurchasePG`);
@@ -150,7 +164,13 @@ export class UserEventModule<
   conversion({
     code,
     targets = this.defaultTargets?.conversion ?? ([] as any),
-  }: FunctionParameter<IUserEventClassModule<TUserEventTarget>["conversion"]>) {
+  }: FunctionParameter<
+    IUserEventClassModule<
+      TEventNames,
+      TEventParams,
+      TUserEventTarget
+    >["conversion"]
+  >) {
     (targets as (keyof TUserEventTarget)[]).forEach((target) => {
       console.log(`[UserEventModule] <${target.toString()}> conversion`);
       this.modules?.[target]?.conversion?.({ code });
@@ -161,7 +181,11 @@ export class UserEventModule<
     userId,
     userProperties,
   }: FunctionParameter<
-    IUserEventClassModule<TUserEventTarget>["updateUserProperties"]
+    IUserEventClassModule<
+      TEventNames,
+      TEventParams,
+      TUserEventTarget
+    >["updateUserProperties"]
   >) {
     Object.entries(this.modules).forEach(([moduleName, module]) => {
       console.log(
@@ -180,4 +204,24 @@ export class UserEventModule<
       (module as IUserEventModule).logout?.();
     });
   }
+}
+
+export function getUserEventModuleMaker<
+  TEventNames,
+  TEventParams extends {
+    [TEventName in `${string & TEventNames}`]: TEventParams[TEventName];
+  },
+>() {
+  return <
+    TUserEventTarget extends Record<
+      `${string & keyof TUserEventTarget}`,
+      IUserEventModule
+    >,
+  >(
+    config: ConstructorProps<TUserEventTarget>,
+  ) => {
+    return new UserEventModule<TEventNames, TEventParams, TUserEventTarget>(
+      config,
+    );
+  };
 }

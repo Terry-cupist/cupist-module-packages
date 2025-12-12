@@ -53,6 +53,10 @@ export interface IUserEventModule {
 }
 
 export interface IUserEventClassModule<
+  TEventNames,
+  TEventParams extends {
+    [TEventName in `${string & TEventNames}`]: TEventParams[TEventName];
+  },
   TUserEventTarget extends Record<
     `${string & keyof TUserEventTarget}`,
     IUserEventModule
@@ -60,7 +64,12 @@ export interface IUserEventClassModule<
 > {
   init?: () => void | Promise<void>;
   log?: (
-    props: FunctionParameter<IUserEventModule["log"]> &
+    props: {
+      [EventName in `${string & TEventNames}`]: {
+        eventName: EventName;
+        params: TEventParams[EventName];
+      };
+    }[`${string & TEventNames}`] &
       TargetProps<TUserEventTarget>,
   ) => void;
   logout?: () => void;
