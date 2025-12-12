@@ -6,11 +6,17 @@ export interface IAmplitudeModuleProps {
   apiKey: string;
 }
 
+type instanceReturnType = IUserEventModule & {
+  init: () => Promise<void>;
+};
+
 export const getAmplitudeInstance: ({
   apiKey,
-}: IAmplitudeModuleProps) => IUserEventModule & {
-  init: () => Promise<void>;
-} = ({ apiKey }) => {
+}: IAmplitudeModuleProps &
+  Partial<instanceReturnType>) => instanceReturnType = ({
+  apiKey,
+  ...props
+}) => {
   return {
     init: async () => {
       if (apiKey) {
@@ -57,5 +63,6 @@ export const getAmplitudeInstance: ({
     logout() {
       amplitude.reset();
     },
+    ...props,
   };
 };
