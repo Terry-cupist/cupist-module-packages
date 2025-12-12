@@ -8,14 +8,17 @@ import {
   SingularLinkParams,
 } from "./singular";
 
-export const getSingularInstance: (props: {
-  apiKey: string;
-  appSecret: string;
-  onDeepLinkAction: (deeplink: string) => void;
-}) => IUserEventModule = ({
+export const getSingularInstance: (
+  props: {
+    apiKey: string;
+    appSecret: string;
+    onDeepLinkAction: (deeplink: string) => void;
+  } & Partial<IUserEventModule>,
+) => IUserEventModule = ({
   apiKey = "",
   appSecret = "",
   onDeepLinkAction,
+  ...props
 }) => ({
   async init() {
     Singular.init(
@@ -77,4 +80,5 @@ export const getSingularInstance: (props: {
     Singular.clearGlobalProperties();
     Singular.unsetCustomUserId();
   },
+  ...props,
 });
