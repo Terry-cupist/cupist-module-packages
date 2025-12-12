@@ -1,5 +1,13 @@
 # @cupist/analytics-facebook
 
+## 1.0.12
+
+### Patch Changes
+
+- d4236cf: log 이벤트 파라미터 타입 강화
+- Updated dependencies [d4236cf]
+  - @cupist/analytics-core@1.0.14
+
 ## 1.0.11
 
 ### Patch Changes
