@@ -22,7 +22,9 @@ export function convertFirebaseUserProperties(
   );
 }
 
-export const getFirebaseInstance: () => IUserEventModule = () => {
+export const getFirebaseInstance: (
+  props: Partial<IUserEventModule>,
+) => IUserEventModule = (props) => {
   return {
     log({ eventName, params }) {
       logEvent(analytics, eventName, params);
@@ -43,5 +45,6 @@ export const getFirebaseInstance: () => IUserEventModule = () => {
     logout() {
       setUserId(analytics, null);
     },
+    ...props,
   };
 };
