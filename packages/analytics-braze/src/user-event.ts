@@ -1,7 +1,9 @@
 import { IUserEventModule } from "@cupist/analytics-core";
 import Braze, { getBrazeUserId, MonthsAsNumber } from "./braze";
 
-export const getBrazeInstance: () => IUserEventModule = () => {
+export const getBrazeInstance: (
+  props: Partial<IUserEventModule>,
+) => IUserEventModule = (props) => {
   return {
     log({ eventName, params }) {
       Braze.logCustomEvent(eventName, params);
@@ -37,5 +39,6 @@ export const getBrazeInstance: () => IUserEventModule = () => {
     logout() {
       Braze.changeUser("");
     },
+    ...props,
   };
 };
