@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.13
+
+### Patch Changes
+
+- be5089e: log 이벤트 파라미터 타입 강화 적용
+
 ## 1.0.11
 
 ### Patch Changes
