@@ -1,16 +1,36 @@
+// Union -> Tuple (순서는 TS 내부 결정이라 '고정'은 되지만, 사람이 기대하는 알파벳 순서 보장은 X)
+type UnionToIntersection<U> = (U extends any ? (x: U) => 0 : never) extends (
+  x: infer I,
+) => 0
+  ? I
+  : never;
+
+type LastOf<U> =
+  UnionToIntersection<U extends any ? (x: U) => 0 : never> extends (
+    x: infer L,
+  ) => 0
+    ? L
+    : never;
+
+type UnionToTuple<U, R extends any[] = []> = [U] extends [never]
+  ? R
+  : UnionToTuple<Exclude<U, LastOf<U>>, [LastOf<U>, ...R]>;
+
+// "순서 무시" 조합 = (고정 순서 튜플의) 부분집합들만 생성
+type UnorderedCombinations<T extends readonly any[]> = T extends readonly [
+  infer F,
+  ...infer R,
+]
+  ? UnorderedCombinations<R> | [F, ...UnorderedCombinations<R>]
+  : [];
+
+// 최종: keyof TUserEventTarget 의 부분집합 (순열 X)
+type PossibleTargetCombinations<T extends Record<string, any>> =
+  UnorderedCombinations<UnionToTuple<Extract<keyof T, string>>>;
+
 type RestrictClassProperties<T, U> = {
   [K in keyof U]: K extends keyof T ? T[K] : never;
 };
-
-type TupleUnion<U extends string, R extends any[] = []> = {
-  [S in U]: Exclude<U, S> extends never
-    ? [...R, S]
-    : TupleUnion<Exclude<U, S>, [...R, S]>;
-}[U];
-
-type AllCombinations<T extends readonly any[]> = T extends [infer F, ...infer R]
-  ? AllCombinations<R> | [F, ...AllCombinations<R>]
-  : [];
 
 type FunctionParameter<T> = T extends (props: infer P, ...args: any[]) => any
   ? P
@@ -22,7 +42,7 @@ type TargetProps<
     IUserEventModule
   >,
 > = {
-  targets?: AllCombinations<TupleUnion<`${string & keyof TUserEventTarget}`>>;
+  targets?: PossibleTargetCombinations<TUserEventTarget>;
 };
 
 export interface IUserEventModule {
@@ -101,17 +121,9 @@ export type ConstructorProps<
     [K in keyof TUserEventTarget]: IUserEventModule;
   };
   defaultTargets: {
-    [K in keyof IUserEventModule]?: AllCombinations<
-      TupleUnion<`${string & keyof TUserEventTarget}`>
-    >;
+    [K in keyof IUserEventModule]?: PossibleTargetCombinations<TUserEventTarget>;
   };
 };
 
 // Re-export utility types for internal use
-export type {
-  AllCombinations,
-  FunctionParameter,
-  RestrictClassProperties,
-  TargetProps,
-  TupleUnion,
-};
+export type { FunctionParameter, RestrictClassProperties, TargetProps };
