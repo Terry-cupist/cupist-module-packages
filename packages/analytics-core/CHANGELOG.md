@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.15
+
+### Patch Changes
+
+- b5a5280: user event params 옵셔널 타입 적용
+
 ## 1.0.14
 
 ### Patch Changes

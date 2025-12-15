@@ -1,5 +1,12 @@
 # @cupist/analytics-braze
 
+## 1.0.16
+
+### Patch Changes
+
+- Updated dependencies [b5a5280]
+  - @cupist/analytics-core@1.0.15
+
 ## 1.0.15
 
 ### Patch Changes
