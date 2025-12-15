@@ -33,7 +33,7 @@ export const getSingularInstance: (
     );
   },
 
-  log({ eventName, params }) {
+  log({ eventName, params = {} }) {
     Singular.eventWithArgs(eventName, params);
     Singular.limitDataSharing(false);
   },
