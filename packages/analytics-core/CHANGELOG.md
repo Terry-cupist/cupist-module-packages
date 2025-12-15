@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.16
+
+### Patch Changes
+
+- ebf1abb: log 이벤트시 params 타입이슈 수정
+
 ## 1.0.15
 
 ### Patch Changes
