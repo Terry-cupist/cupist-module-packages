@@ -208,9 +208,8 @@ export class UserEventModule<
 
 export function getUserEventModuleMaker<
   TEventNames,
-  TEventParams extends {
-    [TEventName in `${string & TEventNames}`]: TEventParams[TEventName];
-  },
+  TEventParams extends Partial<Record<`${string & TEventNames}`, unknown>> &
+    Record<Exclude<keyof TEventParams, TEventNames>, never>,
 >() {
   return <
     TUserEventTarget extends Record<

@@ -65,10 +65,11 @@ export interface IUserEventClassModule<
   init?: () => void | Promise<void>;
   log?: (
     props: {
-      [EventName in `${string & TEventNames}`]: {
-        eventName: EventName;
-        params?: TEventParams[EventName];
-      };
+      [TEventName in `${string & TEventNames}`]: {
+        eventName: TEventName;
+      } & (TEventName extends `${string & keyof TEventParams}`
+        ? { params: TEventParams[TEventName] }
+        : { params?: any });
     }[`${string & TEventNames}`] &
       TargetProps<TUserEventTarget>,
   ) => void;
