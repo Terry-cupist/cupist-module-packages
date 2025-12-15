@@ -27,7 +27,7 @@ type TargetProps<
 
 export interface IUserEventModule {
   init?: () => void | Promise<void>;
-  log?: (props: { eventName: string; params: Record<string, any> }) => void;
+  log?: (props: { eventName: string; params?: Record<string, any> }) => void;
   logout?: () => void;
   logPurchase?: (props: {
     transactionId?: string;
@@ -55,7 +55,7 @@ export interface IUserEventModule {
 export interface IUserEventClassModule<
   TEventNames,
   TEventParams extends {
-    [TEventName in `${string & TEventNames}`]: TEventParams[TEventName];
+    [TEventName in `${string & TEventNames}`]?: TEventParams[TEventName];
   },
   TUserEventTarget extends Record<
     `${string & keyof TUserEventTarget}`,
@@ -67,7 +67,7 @@ export interface IUserEventClassModule<
     props: {
       [EventName in `${string & TEventNames}`]: {
         eventName: EventName;
-        params: TEventParams[EventName];
+        params?: TEventParams[EventName];
       };
     }[`${string & TEventNames}`] &
       TargetProps<TUserEventTarget>,
