@@ -1,5 +1,12 @@
 # @cupist/analytics-facebook
 
+## 1.0.15
+
+### Patch Changes
+
+- Updated dependencies [a631399]
+  - @cupist/analytics-core@1.0.17
+
 ## 1.0.14
 
 ### Patch Changes

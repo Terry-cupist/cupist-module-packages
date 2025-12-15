@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.17
+
+### Patch Changes
+
+- a631399: 비효율적인 타입계산 개선
+
 ## 1.0.16
 
 ### Patch Changes
