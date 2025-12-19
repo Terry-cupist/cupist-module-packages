@@ -1,7 +1,7 @@
 {
-  "name": "@cupist/analytics-facebook",
-  "version": "1.0.16",
-  "description": "",
+  "name": "@cupist/expo-notification-kit",
+  "version": "1.0.25",
+  "description": "Cupist expo notification module.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -17,12 +17,20 @@
     "prepublishOnly": "pnpm prebuild && pnpm build",
     "submit": "pnpm publish --registry=http://localhost:4873"
   },
-  "dependencies": {
-    "@cupist/analytics-core": "workspace:*",
-    "react-native-fbsdk-next": "^13.0.0"
-  },
-  "keywords": [],
+  "keywords": [
+    "notification",
+    "cupist"
+  ],
   "author": "cupist-terry",
   "license": "ISC",
-  "packageManager": "pnpm@10.20.0"
+  "dependencies": {
+    "@cupist/notification-core": "^1.0.31",
+    "expo-modules-core": "~1.11.14",
+    "expo-notifications": "~0.27.8"
+  },
+  "peerDependencies": {
+    "@cupist/notification-core": "workspace:*",
+    "react": "18.2.0",
+    "react-native": "0.73.2"
+  }
 }

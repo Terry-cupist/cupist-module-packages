@@ -1,0 +1,42 @@
+{
+  "name": "@cupist/rn-notification-kit",
+  "version": "1.0.17",
+  "description": "Cupist RN Notification module.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "keywords": [
+    "notification",
+    "cupist"
+  ],
+  "author": "cupist-terry",
+  "license": "ISC",
+  "dependencies": {
+    "@cupist/notification-core": "workspace:*",
+    "react-native-push-notification": "^8.1.1"
+  },
+  "peerDependencies": {
+    "@cupist/notification-core": "^1.0.31",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "react-native-push-notification": "^8.1.1"
+  },
+  "devDependencies": {
+    "@types/react-native-push-notification": "^8.1.4"
+  },
+  "peerDevDependencies": {
+    "@types/react-native-push-notification": "^8.1.4"
+  }
+}

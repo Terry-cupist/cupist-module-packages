@@ -1,5 +1,13 @@
 # @cupist/analytics-facebook
 
+## 1.0.16
+
+### Patch Changes
+
+- 061e7b7: notification integration to common-module-packages
+- Updated dependencies [061e7b7]
+  - @cupist/analytics-core@1.0.18
+
 ## 1.0.15
 
 ### Patch Changes

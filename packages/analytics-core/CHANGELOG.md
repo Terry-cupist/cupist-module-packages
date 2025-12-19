@@ -1,5 +1,11 @@
 # @cupist/analytics-core
 
+## 1.0.18
+
+### Patch Changes
+
+- 061e7b7: notification integration to common-module-packages
+
 ## 1.0.17
 
 ### Patch Changes

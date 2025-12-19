@@ -1,0 +1,9 @@
+# @cupist/firebase-notification-kit
+
+## 1.0.23
+
+### Patch Changes
+
+- 061e7b7: notification integration to common-module-packages
+- Updated dependencies [061e7b7]
+  - @cupist/notification-core@1.0.31

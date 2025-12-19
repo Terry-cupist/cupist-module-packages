@@ -1,0 +1,43 @@
+{
+  "name": "@cupist/firebase-notification-kit",
+  "version": "1.0.23",
+  "description": "Cupist firebase notification module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "pnpm build:tsc && pnpm build:alias",
+    "build:tsc": "pnpm tsc --outDir dist",
+    "build:alias": "tsc-alias -p tsconfig.json",
+    "prepublishOnly": "pnpm prebuild && pnpm build",
+    "submit": "pnpm publish --registry=http://localhost:4873"
+  },
+  "keywords": [
+    "react-native",
+    "push-notification",
+    "expo",
+    "firebase",
+    "fcm",
+    "cupist"
+  ],
+  "author": "cupist-terry",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
+  },
+  "dependencies": {
+    "@cupist/notification-core": "^1.0.31",
+    "@react-native-firebase/app": "^22.4.0",
+    "@react-native-firebase/messaging": "^22.4.0"
+  },
+  "peerDependencies": {
+    "@cupist/notification-core": "workspace:*",
+    "react": "18.2.0",
+    "react-native": "0.73.2"
+  }
+}
