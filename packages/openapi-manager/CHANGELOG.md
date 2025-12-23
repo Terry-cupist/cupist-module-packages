@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.49
+
+### Patch Changes
+
+- e56dd7b: client type 수정
+
 ## 1.0.48
 
 ### Patch Changes
