@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.50
+
+### Patch Changes
+
+- 8bbfbf7: 의존성 역전이슈 수정
+
 ## 1.0.49
 
 ### Patch Changes
