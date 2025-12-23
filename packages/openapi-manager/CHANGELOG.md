@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.48
+
+### Patch Changes
+
+- 398a249: bigint 이슈 수정
+
 ## 1.0.47
 
 ### Patch Changes
