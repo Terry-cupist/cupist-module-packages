@@ -1,9 +1,14 @@
-import { client } from "@/glam";
-import { OpenApiClient } from "@core/client";
+import { OpenApiClient } from "@/core/client";
 import { useNetInfo } from "@react-native-community/netinfo";
+import { AxiosInstance } from "axios";
 import { useEffect, useState } from "react";
 
-export type DefaultApiClientType = typeof client;
+export type DefaultApiClientType = {
+  instance: AxiosInstance;
+  setConfig: (config: any) => void;
+  getConfig: () => any;
+  request: (config: any) => Promise<any>;
+};
 
 export type UseApiClientMangerProps<T extends DefaultApiClientType> = {
   client: OpenApiClient<T>;
@@ -12,9 +17,9 @@ export type UseApiClientMangerProps<T extends DefaultApiClientType> = {
   notRequireRetryUrls: Set<string>;
   notRequireAuthorizationUrls: Set<string>;
   requireUpdateErrorTypes: Set<string>;
-  onAuthErrorCallback: OpenApiClient<T>["onAuthErrorCallback"];
-  onNetworkErrorCallback: OpenApiClient<T>["onNetworkErrorCallback"];
-  onSystemErrorCallback: OpenApiClient<T>["onSystemErrorCallback"];
+  onAuthErrorCallback?: () => Promise<void>;
+  onNetworkErrorCallback?: (error: any) => void;
+  onSystemErrorCallback?: (description?: string) => void;
 };
 
 export const useApiClientManager = <T extends DefaultApiClientType>({

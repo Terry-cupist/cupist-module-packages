@@ -10,13 +10,16 @@
     "outDir": "dist",
     "paths": {
       "@/*": ["src/*"],
+      "@/glam/*": ["src/services/glam/*"],
       "@core/*": ["src/core/*"],
-      "@glam/*": ["src/glam/*"],
+      "@modules/*": ["src/modules/*"],
+      "@services/*": ["src/services/*"],
+      "@glam/*": ["src/services/glam/*"],
       "@hooks/*": ["src/hooks/*"]
     }
   },
   // 컴파일할 파일 패턴
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   // 제외할 디렉토리/파일
-  "exclude": ["dist", "node_modules", "src/glam/generated/**/*.ts"]
+  "exclude": ["dist", "node_modules", "src/services/glam/generated/**/*.ts"]
 }

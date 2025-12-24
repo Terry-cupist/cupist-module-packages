@@ -1,12 +1,12 @@
 import { defineConfig } from "@hey-api/openapi-ts";
 
 export default defineConfig({
-  input: "./src/glam/swagger-spec.json",
+  input: "./src/services/glam/swagger-spec.json",
   output: {
     format: "prettier",
     lint: "eslint",
     tsConfigPath: "./tsconfig.json",
-    path: "./src/glam/generated",
+    path: "./src/services/glam/generated",
   },
   client: "@hey-api/client-axios",
   plugins: [
@@ -22,7 +22,7 @@ export default defineConfig({
     },
     {
       name: "@hey-api/client-axios",
-      runtimeConfigPath: "@/glam/createOpenapi",
+      runtimeConfigPath: "@glam/createOpenapi",
       exportFromIndex: true,
     },
     {
