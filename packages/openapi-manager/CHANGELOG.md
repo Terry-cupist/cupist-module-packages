@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.55
+
+### Patch Changes
+
+- ee00f30: useApiClientManager > 불필요한 Prop 제거
+
 ## 1.0.54
 
 ### Patch Changes
