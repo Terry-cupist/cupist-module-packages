@@ -2,3 +2,7 @@ node_modules
 dist
 .serena
 .DS_Store
+enfpy-api
+onlypass-api
+enfpy.ts
+onlypass.ts
