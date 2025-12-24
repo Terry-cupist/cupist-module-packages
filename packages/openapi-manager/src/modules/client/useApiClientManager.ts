@@ -33,17 +33,6 @@ export const useApiClientManager = <T extends DefaultApiClientType>({
   onNetworkErrorCallback,
   onSystemErrorCallback,
 }: UseApiClientMangerProps<T>) => {
-  console.log("🚀 useApiClientManager: API 클라이언트 매니저를 초기화합니다.", {
-    client,
-    baseURL,
-    token,
-    notRequireRetryUrls,
-    notRequireAuthorizationUrls,
-    requireUpdateErrorTypes,
-    onAuthErrorCallback,
-    onNetworkErrorCallback,
-    onSystemErrorCallback,
-  });
   if (!client || !baseURL) {
     throw new Error(
       `[ApiClientManger] ${client ? "baseURL" : "client"} prop must be provided.`,
@@ -91,7 +80,10 @@ export const useApiClientManager = <T extends DefaultApiClientType>({
   }, [netInfo.isConnected]);
 
   useEffect(() => {
-    console.log("🐛 useApiClientManager token : ", token);
+    console.log(
+      "🔄 useApiClientManager: Auth Token이 변경되었습니다. [:$3]",
+      token,
+    );
     client.setAuthToken(token);
   }, [token]);
 

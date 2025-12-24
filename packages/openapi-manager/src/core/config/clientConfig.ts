@@ -15,7 +15,10 @@ export const getInitialClientConfigMethod = <
 >(
   customConfig?: ConfigParam<T>,
 ) => {
-  console.log("⚙️ getInitialClientConfigMethod: 초기 클라이언트 설정 메서드를 생성합니다.", { customConfig });
+  console.log(
+    "⚙️ [clientConfig:getInitialClientConfigMethod] 초기 클라이언트 설정 메서드를 생성합니다.",
+    { customConfig },
+  );
   return ((config: ConfigParam<T>) => ({
     ...config,
     headers: {

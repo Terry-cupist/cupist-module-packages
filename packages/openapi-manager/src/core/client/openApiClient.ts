@@ -61,16 +61,6 @@ export class OpenApiClient<
     onNetworkErrorCallback,
     onNonAxiosErrorCallback,
   }: OpenApiClientConstructorParams<T>) {
-    console.log("🚀 OpenApiClient 생성자: OpenAPI 클라이언트를 초기화합니다.", {
-      client,
-      notRequireRetryUrls,
-      notRequireAuthorizationUrls,
-      requireUpdateErrorTypes,
-      onSystemErrorCallback,
-      onAuthErrorCallback,
-      onNetworkErrorCallback,
-      onNonAxiosErrorCallback,
-    });
     this.client = client;
 
     if (notRequireRetryUrls) {
@@ -101,22 +91,33 @@ export class OpenApiClient<
   }
 
   public setConfig(config: any) {
-    console.log("⚙️ setConfig: 클라이언트 설정을 업데이트합니다.", { config });
+    console.log(
+      "⚙️ [OpenApiClient:setConfig] 클라이언트 설정을 업데이트합니다.",
+      { config },
+    );
     this.client.setConfig(config);
   }
 
   public setAuthToken(token: string | (() => string | Promise<string>)) {
-    console.log("🔐 setAuthToken: 인증 토큰을 설정합니다.", { token });
+    console.log("🔐 [OpenApiClient:setAuthToken] 인증 토큰을 설정합니다.", {
+      token,
+    });
     this.client.setConfig({ auth: token });
   }
 
   public setIsNetworkConnected(isConnected: boolean) {
-    console.log("🌐 setIsNetworkConnected: 네트워크 연결 상태를 설정합니다.", { isConnected });
+    console.log(
+      "🌐 [OpenApiClient:setIsNetworkConnected] 네트워크 연결 상태를 설정합니다.",
+      { isConnected },
+    );
     this.isNetworkConnected = isConnected;
   }
 
   public setNotRequireRetryUrls(urls: Set<string>) {
-    console.log("🔄 setNotRequireRetryUrls: 재시도하지 않을 URL들을 설정합니다.", { urls });
+    console.log(
+      "🔄 [OpenApiClient:setNotRequireRetryUrls] 재시도하지 않을 URL들을 설정합니다.",
+      { urls },
+    );
     const config = this.client.getConfig();
     this.notRequireRetryUrls = new Set(
       [...urls].map((url) => config.baseURL + url),
@@ -124,7 +125,10 @@ export class OpenApiClient<
   }
 
   public setNotRequireAuthorizationUrls(urls: Set<string>) {
-    console.log("🔓 setNotRequireAuthorizationUrls: 인증이 필요하지 않은 URL들을 설정합니다.", { urls });
+    console.log(
+      "🔓 [OpenApiClient:setNotRequireAuthorizationUrls] 인증이 필요하지 않은 URL들을 설정합니다.",
+      { urls },
+    );
     const config = this.client.getConfig();
     this.notRequireAuthorizationUrls = new Set(
       [...urls].map((url) => config.baseURL + url),
@@ -132,32 +136,50 @@ export class OpenApiClient<
   }
 
   public setRequireUpdateErrorTypes(types: Set<string>) {
-    console.log("🔄 setRequireUpdateErrorTypes: 토큰 갱신이 필요한 에러 타입들을 설정합니다.", { types });
+    console.log(
+      "🔄 [OpenApiClient:setRequireUpdateErrorTypes] 토큰 갱신이 필요한 에러 타입들을 설정합니다.",
+      { types },
+    );
     this.requireUpdateErrorTypes = types;
   }
 
   public setOnSystemErrorCallback(callback: (description?: string) => void) {
-    console.log("⚙️ setOnSystemErrorCallback: 시스템 에러 콜백을 설정합니다.", { callback });
+    console.log(
+      "⚙️ [OpenApiClient:setOnSystemErrorCallback] 시스템 에러 콜백을 설정합니다.",
+      { callback },
+    );
     this.onSystemErrorCallback = callback;
   }
 
   public setOnAuthErrorCallback(callback: () => Promise<void>) {
-    console.log("⚙️ setOnAuthErrorCallback: 인증 에러 콜백을 설정합니다.", { callback });
+    console.log(
+      "⚙️ [OpenApiClient:setOnAuthErrorCallback] 인증 에러 콜백을 설정합니다.",
+      { callback },
+    );
     this.onAuthErrorCallback = callback;
   }
 
   public setOnNetworkErrorCallback(callback: (error: AxiosError) => void) {
-    console.log("⚙️ setOnNetworkErrorCallback: 네트워크 에러 콜백을 설정합니다.", { callback });
+    console.log(
+      "⚙️ [OpenApiClient:setOnNetworkErrorCallback] 네트워크 에러 콜백을 설정합니다.",
+      { callback },
+    );
     this.onNetworkErrorCallback = callback;
   }
 
   public setOnNonAxiosErrorCallback(callback: (error: any) => void) {
-    console.log("⚙️ setOnNonAxiosErrorCallback: Axios가 아닌 에러 콜백을 설정합니다.", { callback });
+    console.log(
+      "⚙️ [OpenApiClient:setOnNonAxiosErrorCallback] Axios가 아닌 에러 콜백을 설정합니다.",
+      { callback },
+    );
     this.onNonAxiosErrorCallback = callback;
   }
 
   public flush(command: "retry" | "cancel") {
-    console.log("🔄 flush: 재시도 큐를 처리합니다.", { command, queueLength: this.retryRequestQueue.length });
+    console.log("🔄 [OpenApiClient:flush] 재시도 큐를 처리합니다.", {
+      command,
+      queueLength: this.retryRequestQueue.length,
+    });
     while (this.retryRequestQueue.length > 0) {
       const retryRequest = this.retryRequestQueue.shift();
       if (command === "retry") {
@@ -169,12 +191,18 @@ export class OpenApiClient<
   }
 
   private checkAuthorizationRequired(url?: string) {
-    console.log("🔍 checkAuthorizationRequired: 인증이 필요한지 확인합니다.", { url });
+    console.log(
+      "🔍 [OpenApiClient:checkAuthorizationRequired] 인증이 필요한지 확인합니다.",
+      { url },
+    );
     return url && !this.notRequireAuthorizationUrls.has(url);
   }
 
   private checkIsTokenRefreshRequired = (error: AxiosError<any>) => {
-    console.log("🔄 checkIsTokenRefreshRequired: 토큰 갱신이 필요한지 확인합니다.", { error });
+    console.log(
+      "🔄 [OpenApiClient:checkIsTokenRefreshRequired] 토큰 갱신이 필요한지 확인합니다.",
+      { error },
+    );
     const { config } = error;
     return (
       !this.notRequireRetryUrls.has(config?.url as string) &&
@@ -184,13 +212,19 @@ export class OpenApiClient<
   };
 
   private handleSystemError(error: any) {
-    console.log("⚠️ handleSystemError: 시스템 에러를 처리합니다.", { error });
+    console.log(
+      "⚠️ [OpenApiClient:handleSystemError] 시스템 에러를 처리합니다.",
+      { error },
+    );
     const description = error.response?.data?.content?.description;
     this.onSystemErrorCallback?.(description);
   }
 
   private handleNetworkError(error: any) {
-    console.log("🌐 handleNetworkError: 네트워크 에러를 처리합니다.", { error });
+    console.log(
+      "🌐 [OpenApiClient:handleNetworkError] 네트워크 에러를 처리합니다.",
+      { error },
+    );
     if (!this.networkErrorTimeout) {
       this.networkErrorResolved = false;
       this.networkErrorTimeout = setTimeout(() => {
@@ -205,13 +239,18 @@ export class OpenApiClient<
   }
 
   private handleAuthError(error: any) {
-    console.log("🔐 handleAuthError: 인증 에러를 처리합니다.", { error });
+    console.log("🔐 [OpenApiClient:handleAuthError] 인증 에러를 처리합니다.", {
+      error,
+    });
     this.onAuthErrorCallback?.();
     return this.pushRetryRequest(error);
   }
 
   private pushRetryRequest = (error: any) => {
-    console.log("📤 pushRetryRequest: 재시도 요청을 큐에 추가합니다.", { error });
+    console.log(
+      "📤 [OpenApiClient:pushRetryRequest] 재시도 요청을 큐에 추가합니다.",
+      { error },
+    );
     return new Promise((resolve, reject) => {
       this.retryRequestQueue.push({
         retry: async () => {
@@ -234,7 +273,9 @@ export class OpenApiClient<
   };
 
   private setRequestInterceptor() {
-    console.log("⚙️ setRequestInterceptor: 요청 인터셉터를 설정합니다.");
+    console.log(
+      "⚙️ [OpenApiClient:setRequestInterceptor] 요청 인터셉터를 설정합니다.",
+    );
     this.client.instance.interceptors.request.use(
       (config) => {
         if (
@@ -252,7 +293,9 @@ export class OpenApiClient<
   }
 
   private setResponseInterceptor() {
-    console.log("⚙️ setResponseInterceptor: 응답 인터셉터를 설정합니다.");
+    console.log(
+      "⚙️ [OpenApiClient:setResponseInterceptor] 응답 인터셉터를 설정합니다.",
+    );
     this.client.instance.interceptors.response.use(
       (response) => {
         if (this.networkErrorTimeout) {
@@ -263,7 +306,10 @@ export class OpenApiClient<
         return response;
       },
       (error) => {
-        console.log("🐛 response interceptor error: ", error);
+        console.log(
+          "🐛 [OpenApiClient:setResponseInterceptor] response interceptor error:",
+          error,
+        );
         const isNotAxiosError = !(error instanceof AxiosError);
         if (isNotAxiosError) {
           this.onNonAxiosErrorCallback?.(error);
@@ -302,7 +348,10 @@ export const createOpenApiClientModule = <
 >(
   params: OpenApiClientConstructorParams<T>,
 ) => {
-  console.log("🔧 createOpenApiClientModule: OpenAPI 클라이언트 모듈을 생성합니다.", { params });
+  console.log(
+    "🔧 [createOpenApiClientModule] OpenAPI 클라이언트 모듈을 생성합니다.",
+    { params },
+  );
   const client = new OpenApiClient(params);
   return client;
 };

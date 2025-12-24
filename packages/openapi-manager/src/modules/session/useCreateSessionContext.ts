@@ -24,71 +24,74 @@ export const useCreateSessionContext = <T extends SessionState>({
   onRequestRefreshTokenError,
   onRequestRefreshTokenUI,
 }: SessionProviderProps<T>): UseCreateSessionContextResult<T> => {
-  console.log("🚀 useCreateSessionContext: 세션 컨텍스트를 생성합니다.", {
-    initialState,
-    onGetAccessRefreshToken,
-    onSignOutApi,
-    onClearApiCache,
-    onRemoveStoredValues,
-    onNavigateAfterRevokeSession,
-    onRevokeChat,
-    onRevokeUserEvent,
-    onRevokeNotification,
-    onSetSessionLocalStorage,
-    onInitSessionError,
-    onGetExtraSessionLocalStorageState,
-    onRequestRefreshTokenApi,
-    onAfterRefreshToken,
-    onRequestRefreshTokenError,
-    onRequestRefreshTokenUI,
-  });
   const isTokenRefreshingRef = useRef(false);
 
   const [initialized, setInitialized] = useState(false);
   const [session, setSession] = useState<T>(initialState);
   const storeSession = useCallback(async (partialSession: Partial<T>) => {
-    console.log("💾 storeSession: 세션 데이터를 저장합니다.", { partialSession });
+    console.log("💾 storeSession: 세션 데이터를 저장합니다. [:$3]", {
+      partialSession,
+    });
     await onSetSessionLocalStorage?.(partialSession);
     setSession((prev) => ({ ...prev, ...partialSession }));
   }, []);
 
   const revokeSession = useCallback(
     async ({ session: _session, intended = true }: RevokeParams<T>) => {
-      console.log("👋 revokeSession: 세션을 취소합니다.", { session: _session, intended });
-      console.log("🐛 revokeSession signout check 🧾");
+      console.log("👋 revokeSession:  세션을 취소합니다. [:$3]", {
+        session: _session,
+        intended,
+      });
+      console.log("🧾 revokeSession: signout 가능 여부를 체크합니다.");
       if (session.accessToken && intended) {
-        console.log("🐛 revokeSession signout valid! ✅");
+        console.log("✅ revokeSession signout이 유효합니다!");
         try {
           await onSignOutApi();
         } catch (error) {
           // 로그아웃 실패 시 무시함
-          console.log("🐛 revokeSession signOut error : ", error);
+          console.log(
+            "🚨 [useCreateSessionContext:revokeSession] 로그아웃 API 호출 실패",
+            error,
+          );
         }
       }
 
       try {
-        console.log("🐛 revokeSession clear api cache");
+        console.log(
+          "🗑️ [useCreateSessionContext:revokeSession] API 캐시 클리어",
+        );
         onClearApiCache?.();
 
-        console.log("🐛 revokeSession remove all stored");
+        console.log(
+          "🗑️ [useCreateSessionContext:revokeSession] 저장된 값들 제거",
+        );
         await onRemoveStoredValues?.();
 
-        console.log("🐛 revokeSession store session initial state");
+        console.log(
+          "💾 [useCreateSessionContext:revokeSession] 세션 초기 상태 저장",
+        );
         storeSession(initialState);
 
-        console.log("🐛 revokeSession revoke chat");
+        console.log("🚫 [useCreateSessionContext:revokeSession] 채팅 취소");
         onRevokeChat({ session: _session, intended });
 
-        console.log("🐛 revokeSession revoke user event");
+        console.log(
+          "🚫 [useCreateSessionContext:revokeSession] 사용자 이벤트 취소",
+        );
         onRevokeUserEvent({ session: _session, intended });
 
-        console.log("🐛 revokeSession revoke notification");
+        console.log("🚫 [useCreateSessionContext:revokeSession] 알림 취소");
         onRevokeNotification({ session: _session, intended });
 
-        console.log("🐛 revokeSession navigate after revoke session");
+        console.log(
+          "🧭 [useCreateSessionContext:revokeSession] 세션 취소 후 네비게이션",
+        );
         onNavigateAfterRevokeSession?.({ session: _session, intended });
       } catch (error) {
-        console.log("🐛 revokeSession error : ", error);
+        console.log(
+          "🚨 [useCreateSessionContext:revokeSession] 세션 취소 중 에러 발생",
+          error,
+        );
       }
     },
     [
@@ -109,11 +112,11 @@ export const useCreateSessionContext = <T extends SessionState>({
     try {
       const { accessToken, refreshToken } = await onGetAccessRefreshToken();
       console.log(
-        "🐛 initSession onGetAccessRefreshToken accessToken : ",
+        "⚙️ initSession: onGetAccessRefreshToken -> accessToken : ",
         accessToken,
       );
       console.log(
-        "🐛 initSession onGetAccessRefreshToken refreshToken : ",
+        "⚙️ initSession: onGetAccessRefreshToken -> refreshToken : ",
         refreshToken,
       );
       if (accessToken && refreshToken) {
@@ -123,7 +126,10 @@ export const useCreateSessionContext = <T extends SessionState>({
         await storeSession({ accessToken } as Partial<T>);
       }
     } catch (error) {
-      console.log("🐛 initToken error : ", error);
+      console.log(
+        "🚨 [useCreateSessionContext:initSession] 세션 초기화 에러",
+        error,
+      );
       if (error instanceof Error) {
         onInitSessionError(error);
       }
@@ -144,17 +150,16 @@ export const useCreateSessionContext = <T extends SessionState>({
     async (
       onRefreshResultCallback?: (isSuccess: boolean) => void | Promise<void>,
     ) => {
-      console.log("🔄 requestRefreshToken: 토큰을 갱신합니다.", { onRefreshResultCallback });
+      console.log("🔄 [requestRefreshToken:$3]", { onRefreshResultCallback });
       if (isTokenRefreshingRef.current) {
         return;
       }
       isTokenRefreshingRef.current = true;
 
       try {
-        console.log("🐛 session : ", session);
         console.log(
-          "🐛 requestRefreshToken session.refreshToken : ",
-          session.refreshToken,
+          "🔍 [useCreateSessionContext:requestRefreshToken] 현재 세션 상태",
+          session,
         );
         const { accessToken, refreshToken } = await onRequestRefreshTokenApi(
           session.refreshToken,
@@ -165,7 +170,10 @@ export const useCreateSessionContext = <T extends SessionState>({
 
         onRefreshResultCallback?.(true);
       } catch (error) {
-        console.log("🐛 requestRefreshToken error : ", error);
+        console.log(
+          "🚨 [useCreateSessionContext:requestRefreshToken] 토큰 갱신 실패",
+          error,
+        );
         if (error instanceof Error) {
           onRequestRefreshTokenError(error);
         }
@@ -189,6 +197,27 @@ export const useCreateSessionContext = <T extends SessionState>({
 
   useEffect(() => {
     initSession();
+    console.log(
+      "🚀 useCreateSessionContext: sessionContext를 생성합니다. [:$3]",
+      {
+        initialState,
+        onGetAccessRefreshToken,
+        onSignOutApi,
+        onClearApiCache,
+        onRemoveStoredValues,
+        onNavigateAfterRevokeSession,
+        onRevokeChat,
+        onRevokeUserEvent,
+        onRevokeNotification,
+        onSetSessionLocalStorage,
+        onInitSessionError,
+        onGetExtraSessionLocalStorageState,
+        onRequestRefreshTokenApi,
+        onAfterRefreshToken,
+        onRequestRefreshTokenError,
+        onRequestRefreshTokenUI,
+      },
+    );
   }, []);
 
   return useMemo(() => {

@@ -1,7 +1,7 @@
-import { glamAuthControllerRefreshTokenMutationOptions } from "../../generated";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useCallback } from "react";
+import { glamAuthControllerRefreshTokenMutationOptions } from "../../generated";
 
 const ERROR_TYPE_SIGN_OUT = new Set([
   "refresh_token_expired_error",
@@ -10,21 +10,26 @@ const ERROR_TYPE_SIGN_OUT = new Set([
 const MAX_RETRY_COUNT = 3;
 
 export const useGlamRefreshToken = () => {
-  console.log("🚀 useGlamRefreshToken: Glam 리프레시 토큰 훅을 초기화합니다.");
   const { mutationFn } = glamAuthControllerRefreshTokenMutationOptions();
   const { mutateAsync: refreshTokenApi } = useMutation({
     mutationFn,
     retry: (failureCount, error) => {
-      console.log("🐛 refreshTokenApi retry: ", failureCount);
       if (
         error instanceof AxiosError &&
         ERROR_TYPE_SIGN_OUT.has(error.response?.data?.content?.type)
       ) {
-        console.log("🐛 refreshTokenApi retry: ", failureCount);
+        console.log(
+          "🛑 refreshTokenApi 재시도를 종료합니다. (리프레쉬 토큰 만료) [재시도 횟수 :$3]",
+          failureCount,
+        );
         return false;
       }
 
       if (failureCount >= MAX_RETRY_COUNT - 1) {
+        console.log(
+          "🛑 refreshTokenApi 재시도를 종료합니다. (최대 횟수 초과) [재시도 횟수 :$3]",
+          failureCount,
+        );
         return false;
       }
 
@@ -34,7 +39,7 @@ export const useGlamRefreshToken = () => {
   });
 
   return useCallback((refreshToken: string) => {
-    console.log("🔄 useGlamRefreshToken callback: 리프레시 토큰을 사용하여 토큰을 갱신합니다.", { refreshToken });
+    console.log("🔄 useGlamRefreshToken [callback:$3]", { refreshToken });
     const headers: Record<string, string> = {
       Authorization: `Bearer ${refreshToken}`,
     };
