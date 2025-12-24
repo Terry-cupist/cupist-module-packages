@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.51
+
+### Patch Changes
+
+- 4af574e: 디렉토리 구조 변경
+
 ## 1.0.50
 
 ### Patch Changes

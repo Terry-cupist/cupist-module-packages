@@ -1,6 +1,6 @@
 {
   "name": "@cupist/openapi-manager",
-  "version": "1.0.50",
+  "version": "1.0.51",
   "description": "Cupist OpenAPI Manager for React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
   "sideEffects": [
     "dist/index.js",
     "dist/polyfill.js",
-    "dist/glam.js"
+    "dist/services/glam/index.js"
   ],
   "scripts": {
     "prebuild": "rm -rf dist",
@@ -22,9 +22,9 @@
     "build:alias": "tsc-alias -p tsconfig.json",
     "prepublishOnly": "pnpm prebuild && pnpm build",
     "submit": "pnpm publish --registry=http://localhost:4873",
-    "generate:glam": "openapi-ts -f ./src/glam/openapi.config.ts",
-    "generate:enfpy": "openapi-ts -f ./src/enfpy/openapi.config.ts",
-    "generate:onlypass": "openapi-ts -f ./src/onlypass/openapi.config.ts"
+    "generate:glam": "openapi-ts -f ./src/services/glam/openapi.config.ts",
+    "generate:enfpy": "openapi-ts -f ./src/services/enfpy/openapi.config.ts",
+    "generate:onlypass": "openapi-ts -f ./src/services/onlypass/openapi.config.ts"
   },
   "dependencies": {
     "@cupist/local-storage": "workspace:*",
