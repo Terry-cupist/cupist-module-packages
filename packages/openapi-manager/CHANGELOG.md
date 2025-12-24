@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.54
+
+### Patch Changes
+
+- 45d61ee: 불필요 Dependencies 제거
+
 ## 1.0.53
 
 ### Patch Changes
