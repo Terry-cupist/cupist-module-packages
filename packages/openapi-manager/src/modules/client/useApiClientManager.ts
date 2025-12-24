@@ -48,12 +48,7 @@ export const useApiClientManager = <T extends DefaultApiClientType>({
     client.setNotRequireAuthorizationUrls(notRequireAuthorizationUrls);
     client.setRequireUpdateErrorTypes(requireUpdateErrorTypes);
     setInitialized(true);
-  }, [
-    baseURL,
-    notRequireRetryUrls,
-    notRequireAuthorizationUrls,
-    requireUpdateErrorTypes,
-  ]);
+  }, []);
 
   useEffect(() => {
     if (onAuthErrorCallback) {
