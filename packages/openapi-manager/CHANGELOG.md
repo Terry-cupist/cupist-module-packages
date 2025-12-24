@@ -1,5 +1,11 @@
 # @cupist/openapi-manager
 
+## 1.0.53
+
+### Patch Changes
+
+- 5fefec5: console.log 수정
+
 ## 1.0.52
 
 ### Patch Changes

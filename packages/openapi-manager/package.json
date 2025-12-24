@@ -1,6 +1,6 @@
 {
   "name": "@cupist/openapi-manager",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "description": "Cupist OpenAPI Manager for React Native",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
