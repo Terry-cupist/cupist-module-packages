@@ -24,17 +24,37 @@ export const useCreateSessionContext = <T extends SessionState>({
   onRequestRefreshTokenError,
   onRequestRefreshTokenUI,
 }: SessionProviderProps<T>): UseCreateSessionContextResult<T> => {
+  console.log("🚀 useCreateSessionContext: 세션 컨텍스트를 생성합니다.", {
+    initialState,
+    onGetAccessRefreshToken,
+    onSignOutApi,
+    onClearApiCache,
+    onRemoveStoredValues,
+    onNavigateAfterRevokeSession,
+    onRevokeChat,
+    onRevokeUserEvent,
+    onRevokeNotification,
+    onSetSessionLocalStorage,
+    onInitSessionError,
+    onGetExtraSessionLocalStorageState,
+    onRequestRefreshTokenApi,
+    onAfterRefreshToken,
+    onRequestRefreshTokenError,
+    onRequestRefreshTokenUI,
+  });
   const isTokenRefreshingRef = useRef(false);
 
   const [initialized, setInitialized] = useState(false);
   const [session, setSession] = useState<T>(initialState);
   const storeSession = useCallback(async (partialSession: Partial<T>) => {
+    console.log("💾 storeSession: 세션 데이터를 저장합니다.", { partialSession });
     await onSetSessionLocalStorage?.(partialSession);
     setSession((prev) => ({ ...prev, ...partialSession }));
   }, []);
 
   const revokeSession = useCallback(
     async ({ session: _session, intended = true }: RevokeParams<T>) => {
+      console.log("👋 revokeSession: 세션을 취소합니다.", { session: _session, intended });
       console.log("🐛 revokeSession signout check 🧾");
       if (session.accessToken && intended) {
         console.log("🐛 revokeSession signout valid! ✅");
@@ -85,6 +105,7 @@ export const useCreateSessionContext = <T extends SessionState>({
   );
 
   const initSession = useCallback(async () => {
+    console.log("🚀 initSession: 세션을 초기화합니다.");
     try {
       const { accessToken, refreshToken } = await onGetAccessRefreshToken();
       console.log(
@@ -123,6 +144,7 @@ export const useCreateSessionContext = <T extends SessionState>({
     async (
       onRefreshResultCallback?: (isSuccess: boolean) => void | Promise<void>,
     ) => {
+      console.log("🔄 requestRefreshToken: 토큰을 갱신합니다.", { onRefreshResultCallback });
       if (isTokenRefreshingRef.current) {
         return;
       }

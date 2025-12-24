@@ -10,6 +10,7 @@ const ERROR_TYPE_SIGN_OUT = new Set([
 const MAX_RETRY_COUNT = 3;
 
 export const useGlamRefreshToken = () => {
+  console.log("🚀 useGlamRefreshToken: Glam 리프레시 토큰 훅을 초기화합니다.");
   const { mutationFn } = glamAuthControllerRefreshTokenMutationOptions();
   const { mutateAsync: refreshTokenApi } = useMutation({
     mutationFn,
@@ -33,6 +34,7 @@ export const useGlamRefreshToken = () => {
   });
 
   return useCallback((refreshToken: string) => {
+    console.log("🔄 useGlamRefreshToken callback: 리프레시 토큰을 사용하여 토큰을 갱신합니다.", { refreshToken });
     const headers: Record<string, string> = {
       Authorization: `Bearer ${refreshToken}`,
     };

@@ -12,6 +12,7 @@ export interface ErrorResponse {
 }
 
 export const extractErrorMessage = (errorResponse: unknown) => {
+  console.log("📝 extractErrorMessage: 에러 응답에서 에러 메시지를 추출합니다.", { errorResponse });
   try {
     const { content, status_code: statusCode } = errorResponse as ErrorResponse;
     const { type = "UNKNOWN_TYPE" } = content || {};
@@ -34,6 +35,7 @@ export const extractErrorDetails = (
   type: string;
   description: string;
 } | null => {
+  console.log("📋 extractErrorDetails: 에러 응답에서 상세 정보를 추출합니다.", { errorResponse });
   try {
     const response = errorResponse as ErrorResponse;
     if (!response?.content) return null;
@@ -71,6 +73,7 @@ export default class ApiError extends AxiosError {
   errorDetails: ReturnType<typeof extractErrorDetails>;
 
   constructor(error: AxiosError) {
+    console.log("🚨 ApiError 생성자: Axios 에러를 ApiError로 변환합니다.", { error });
     const { message, code, config, request, response } = error;
     super(message, code, config, request, response);
 
@@ -87,6 +90,7 @@ export default class ApiError extends AxiosError {
   }
 
   private parseServerError(data: unknown): ErrorResponse | null {
+    console.log("📋 parseServerError: 서버 에러 데이터를 파싱합니다.", { data });
     try {
       const parsed = data as ErrorResponse;
       if (parsed?.status_code || parsed?.category || parsed?.content) {
@@ -99,18 +103,22 @@ export default class ApiError extends AxiosError {
   }
 
   getErrorCategory(): string | null {
+    console.log("📋 getErrorCategory: 에러 카테고리를 반환합니다.", { category: this.serverError?.category });
     return this.serverError?.category || null;
   }
 
   getErrorType(): string | null {
+    console.log("📋 getErrorType: 에러 타입을 반환합니다.", { type: this.serverError?.content?.type });
     return this.serverError?.content?.type || null;
   }
 
   getErrorDescription(): string | null {
+    console.log("📋 getErrorDescription: 에러 설명을 반환합니다.", { description: this.serverError?.content?.description });
     return this.serverError?.content?.description || null;
   }
 
   getStatusCode(): number | null {
+    console.log("📊 getStatusCode: 에러 상태 코드를 반환합니다.", { statusCode: this.serverError?.status_code });
     return this.serverError?.status_code || null;
   }
 }
