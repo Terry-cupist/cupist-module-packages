@@ -12,7 +12,7 @@ export interface ErrorResponse {
 }
 
 export const extractErrorMessage = (errorResponse: unknown) => {
-  console.log("📝 [extractErrorMessage:$3]", { errorResponse });
+  console.log("📝 [extractErrorMessage]", { errorResponse });
   try {
     const { content, status_code: statusCode } = errorResponse as ErrorResponse;
     const { type = "UNKNOWN_TYPE" } = content || {};
@@ -35,7 +35,7 @@ export const extractErrorDetails = (
   type: string;
   description: string;
 } | null => {
-  console.log("📋 [extractErrorDetails:$3]", { errorResponse });
+  console.log("📋 [extractErrorDetails]", { errorResponse });
   try {
     const response = errorResponse as ErrorResponse;
     if (!response?.content) return null;
@@ -73,7 +73,7 @@ export default class ApiError extends AxiosError {
   errorDetails: ReturnType<typeof extractErrorDetails>;
 
   constructor(error: AxiosError) {
-    console.log("🚨 ApiError [생성자:$3]", { error });
+    console.log("🚨 ApiError [생성자]", { error });
     const { message, code, config, request, response } = error;
     super(message, code, config, request, response);
 
@@ -90,7 +90,7 @@ export default class ApiError extends AxiosError {
   }
 
   private parseServerError(data: unknown): ErrorResponse | null {
-    console.log("📋 [parseServerError:$3]", { data });
+    console.log("📋 [parseServerError]", { data });
     try {
       const parsed = data as ErrorResponse;
       if (parsed?.status_code || parsed?.category || parsed?.content) {
@@ -103,28 +103,28 @@ export default class ApiError extends AxiosError {
   }
 
   getErrorCategory(): string | null {
-    console.log("📋 [getErrorCategory:$3]", {
+    console.log("📋 [getErrorCategory]", {
       category: this.serverError?.category,
     });
     return this.serverError?.category || null;
   }
 
   getErrorType(): string | null {
-    console.log("📋 [getErrorType:$3]", {
+    console.log("📋 [getErrorType]", {
       type: this.serverError?.content?.type,
     });
     return this.serverError?.content?.type || null;
   }
 
   getErrorDescription(): string | null {
-    console.log("📋 [getErrorDescription:$3]", {
+    console.log("📋 [getErrorDescription]", {
       description: this.serverError?.content?.description,
     });
     return this.serverError?.content?.description || null;
   }
 
   getStatusCode(): number | null {
-    console.log("📊 [getStatusCode:$3]", {
+    console.log("📊 [getStatusCode]", {
       statusCode: this.serverError?.status_code,
     });
     return this.serverError?.status_code || null;

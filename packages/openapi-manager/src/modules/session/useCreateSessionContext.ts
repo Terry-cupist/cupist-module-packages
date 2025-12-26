@@ -29,7 +29,7 @@ export const useCreateSessionContext = <T extends SessionState>({
   const [initialized, setInitialized] = useState(false);
   const [session, setSession] = useState<T>(initialState);
   const storeSession = useCallback(async (partialSession: Partial<T>) => {
-    console.log("💾 storeSession: 세션 데이터를 저장합니다. [:$3]", {
+    console.log("💾 storeSession: 세션 데이터를 저장합니다. ", {
       partialSession,
     });
     await onSetSessionLocalStorage?.(partialSession);
@@ -38,7 +38,7 @@ export const useCreateSessionContext = <T extends SessionState>({
 
   const revokeSession = useCallback(
     async ({ session: _session, intended = true }: RevokeParams<T>) => {
-      console.log("👋 revokeSession:  세션을 취소합니다. [:$3]", {
+      console.log("👋 revokeSession:  세션을 취소합니다. ", {
         session: _session,
         intended,
       });
@@ -150,7 +150,7 @@ export const useCreateSessionContext = <T extends SessionState>({
     async (
       onRefreshResultCallback?: (isSuccess: boolean) => void | Promise<void>,
     ) => {
-      console.log("🔄 [requestRefreshToken:$3]", { onRefreshResultCallback });
+      console.log("🔄 [requestRefreshToken]", { onRefreshResultCallback });
       if (isTokenRefreshingRef.current) {
         return;
       }
@@ -197,27 +197,24 @@ export const useCreateSessionContext = <T extends SessionState>({
 
   useEffect(() => {
     initSession();
-    console.log(
-      "🚀 useCreateSessionContext: sessionContext를 생성합니다. [:$3]",
-      {
-        initialState,
-        onGetAccessRefreshToken,
-        onSignOutApi,
-        onClearApiCache,
-        onRemoveStoredValues,
-        onNavigateAfterRevokeSession,
-        onRevokeChat,
-        onRevokeUserEvent,
-        onRevokeNotification,
-        onSetSessionLocalStorage,
-        onInitSessionError,
-        onGetExtraSessionLocalStorageState,
-        onRequestRefreshTokenApi,
-        onAfterRefreshToken,
-        onRequestRefreshTokenError,
-        onRequestRefreshTokenUI,
-      },
-    );
+    console.log("🚀 useCreateSessionContext: sessionContext를 생성합니다. ", {
+      initialState,
+      onGetAccessRefreshToken,
+      onSignOutApi,
+      onClearApiCache,
+      onRemoveStoredValues,
+      onNavigateAfterRevokeSession,
+      onRevokeChat,
+      onRevokeUserEvent,
+      onRevokeNotification,
+      onSetSessionLocalStorage,
+      onInitSessionError,
+      onGetExtraSessionLocalStorageState,
+      onRequestRefreshTokenApi,
+      onAfterRefreshToken,
+      onRequestRefreshTokenError,
+      onRequestRefreshTokenUI,
+    });
   }, []);
 
   return useMemo(() => {

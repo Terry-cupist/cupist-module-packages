@@ -19,7 +19,7 @@ export const useGlamRefreshToken = () => {
         ERROR_TYPE_SIGN_OUT.has(error.response?.data?.content?.type)
       ) {
         console.log(
-          "🛑 refreshTokenApi 재시도를 종료합니다. (리프레쉬 토큰 만료) [재시도 횟수 :$3]",
+          "🛑 refreshTokenApi 재시도를 종료합니다. (리프레쉬 토큰 만료) [재시도 횟수 ]",
           failureCount,
         );
         return false;
@@ -27,7 +27,7 @@ export const useGlamRefreshToken = () => {
 
       if (failureCount >= MAX_RETRY_COUNT - 1) {
         console.log(
-          "🛑 refreshTokenApi 재시도를 종료합니다. (최대 횟수 초과) [재시도 횟수 :$3]",
+          "🛑 refreshTokenApi 재시도를 종료합니다. (최대 횟수 초과) [재시도 횟수 ]",
           failureCount,
         );
         return false;
@@ -39,7 +39,7 @@ export const useGlamRefreshToken = () => {
   });
 
   return useCallback((refreshToken: string) => {
-    console.log("🔄 useGlamRefreshToken [callback:$3]", { refreshToken });
+    console.log("🔄 useGlamRefreshToken [callback]", { refreshToken });
     const headers: Record<string, string> = {
       Authorization: `Bearer ${refreshToken}`,
     };

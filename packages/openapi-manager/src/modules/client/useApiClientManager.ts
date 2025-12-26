@@ -14,9 +14,6 @@ export type UseApiClientMangerProps<T extends DefaultApiClientType> = {
   client: OpenApiClient<T>;
   baseURL: string;
   token: string;
-  notRequireRetryUrls: Set<string>;
-  notRequireAuthorizationUrls: Set<string>;
-  requireUpdateErrorTypes: Set<string>;
   onAuthErrorCallback?: () => Promise<void>;
   onNetworkErrorCallback?: (error: any) => void;
   onSystemErrorCallback?: (description?: string) => void;
@@ -26,9 +23,6 @@ export const useApiClientManager = <T extends DefaultApiClientType>({
   client,
   baseURL,
   token,
-  notRequireRetryUrls,
-  notRequireAuthorizationUrls,
-  requireUpdateErrorTypes,
   onAuthErrorCallback,
   onNetworkErrorCallback,
   onSystemErrorCallback,
@@ -44,9 +38,6 @@ export const useApiClientManager = <T extends DefaultApiClientType>({
 
   useEffect(() => {
     client.setConfig({ baseURL });
-    client.setNotRequireRetryUrls(notRequireRetryUrls);
-    client.setNotRequireAuthorizationUrls(notRequireAuthorizationUrls);
-    client.setRequireUpdateErrorTypes(requireUpdateErrorTypes);
     setInitialized(true);
   }, []);
 
@@ -75,10 +66,7 @@ export const useApiClientManager = <T extends DefaultApiClientType>({
   }, [netInfo.isConnected]);
 
   useEffect(() => {
-    console.log(
-      "🔄 useApiClientManager: Auth Token이 변경되었습니다. [:$3]",
-      token,
-    );
+    console.log("🔄 useApiClientManager: Auth Token이 변경되었습니다. ", token);
     client.setAuthToken(token);
   }, [token]);
 
